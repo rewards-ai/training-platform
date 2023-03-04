@@ -26,6 +26,7 @@ class UI(QMainWindow):
         self.model_list_window.raise_()
         self.navbar.raise_()
 
+
 app = QApplication(sys.argv)
 window = UI()
 app.exec_()
