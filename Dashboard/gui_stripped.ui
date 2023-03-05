@@ -63,7 +63,7 @@ border: 1px solid black;</string>
       <rect>
        <x>30</x>
        <y>20</y>
-       <width>571</width>
+       <width>791</width>
        <height>41</height>
       </rect>
      </property>
@@ -113,6 +113,13 @@ font-weight: bold; height: auto;</string>
         </property>
         <property name="text">
          <string>Create Models</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="text">
+         <string>PushButton</string>
         </property>
        </widget>
       </item>

@@ -110,9 +110,6 @@ ENV/
 env.bak/
 venv.bak/
 
-rewards_ai
-rewards-sdk
-
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -130,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+rewards-sdk/
+rewards_ai
+auth/
+.idea/

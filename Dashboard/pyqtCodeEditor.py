@@ -1,16 +1,15 @@
-import sys
+from PyQt5.QtCore import QThread, pyqtSignal, Qt, QRegExp
+from PyQt5.QtGui import QTextCharFormat, QFont, QColor, QTextCursor, QSyntaxHighlighter
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit
-from PyQt5.QtGui import QTextCharFormat, QFont, QSyntaxHighlighter, QColor, QTextCursor
-from PyQt5.QtCore import Qt, QRegExp
 
 
-class PythonHighlighter(QSyntaxHighlighter):
+class pyqtHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
-        super(PythonHighlighter, self).__init__(parent)
+        super(pyqtHighlighter, self).__init__(parent)
         self.highlighting_rules = []
 
         keyword_format = QTextCharFormat()
-        keyword_format.setForeground(Qt.darkBlue)
+        keyword_format.setForeground(QColor("#CC58E7"))
         keyword_format.setFontWeight(QFont.Bold)
         keywords = ['and', 'as', 'assert', 'break', 'class', 'continue',
                     'def', 'del', 'elif', 'else', 'except', 'False',
@@ -22,26 +21,34 @@ class PythonHighlighter(QSyntaxHighlighter):
             pattern = QRegExp(r'\b' + word + r'\b')
             self.highlighting_rules.append((pattern, keyword_format))
 
+        type_format = QTextCharFormat()
+        type_format.setForeground(QColor("#52b3c0"))
+        type_format.setFontWeight(QFont.Bold)
+        types = ['False', 'True', 'bool', 'int', 'str', 'float', 'list', 'tuple', 'range', 'dict', 'set', 'frozenset']
+        for word in types:
+            pattern = QRegExp(r'\b' + word + r'\b')
+            self.highlighting_rules.append((pattern, type_format))
+
         quotation_format = QTextCharFormat()
-        quotation_format.setForeground(Qt.darkGreen)
+        quotation_format.setForeground(QColor("#5FCA7F"))
         pattern = QRegExp(r'\".*\"')
         pattern.setMinimal(True)
         self.highlighting_rules.append((pattern, quotation_format))
 
         function_format = QTextCharFormat()
-        function_format.setFontItalic(True)
-        function_format.setForeground(Qt.blue)
+        function_format.setForeground(QColor("#FD8A8A"))
         pattern = QRegExp(r'\b[A-Za-z0-9_]+(?=\()')
         self.highlighting_rules.append((pattern, function_format))
 
         indent_format = QTextCharFormat()
-        indent_format.setForeground(QColor('#444444'))
+        indent_format.setForeground(QColor('#ffffff'))
         indent_pattern = QRegExp(r'^\s+')
         self.highlighting_rules.append((indent_pattern, indent_format))
 
     def highlightBlock(self, text):
         for pattern, format in self.highlighting_rules:
             expression = QRegExp(pattern)
+            format.setFontPointSize(10)
             index = expression.indexIn(text)
             while index >= 0:
                 length = expression.matchedLength()
@@ -49,11 +56,13 @@ class PythonHighlighter(QSyntaxHighlighter):
                 index = expression.indexIn(text, index + length)
 
 
-class IndentTextEdit(QTextEdit):
+class pyqtCodeEdit(QTextEdit):
     def __init__(self, parent=None):
-        super(IndentTextEdit, self).__init__(parent)
-        self.setStyleSheet("font-size: 18px;")
-        self.setTabStopWidth(20)
+        super(pyqtCodeEdit, self).__init__(parent)
+        self.setFontPointSize(10)
+        # self.setStyle()
+        self.setStyleSheet("padding: 10px;")
+        self.setTabStopWidth(30)
         self.previous_indent = ''
 
     def keyPressEvent(self, event):
@@ -73,24 +82,4 @@ class IndentTextEdit(QTextEdit):
                 indent += 4
             cursor.insertText(' ' * indent)
 
-        super(IndentTextEdit, self).keyPressEvent(event)
-
-
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.editor = IndentTextEdit()
-        self.setCentralWidget(self.editor)
-
-        self.highlighter = PythonHighlighter(self.editor.document())
-
-        self.setWindowTitle('Python Code Editor')
-        self.setGeometry(100, 100, 800, 600)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
-    sys.exit(app.exec_())
+        super(pyqtCodeEdit, self).keyPressEvent(event)

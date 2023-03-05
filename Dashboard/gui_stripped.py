@@ -1,16 +1,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, Qt, QRegExp
+from PyQt5.QtGui import QTextCharFormat, QFont, QColor, QTextCursor, QSyntaxHighlighter
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-import sys
 import matplotlib.pyplot as plt
-from rewards_ai.Environments.CarRacer.CarTrainer import Game, Agent
-from rewards_ai.Model.DQN import Linear_QNet
-import pygame
-import time
 import numpy as np
 import pyqtgraph as pg
-from PyQt5.Qsci import QsciScintilla
+import pygame
+import sys
+from rewards_ai.Environments.CarRacer.CarTrainer import Game, Agent
+from rewards_ai.Model.DQN import Linear_QNet
+import time
+from pyqtCodeEditor import pyqtHighlighter, pyqtCodeEdit
 
 plt.ion()
 
@@ -116,6 +118,7 @@ class WorkerTraining(QThread):
     def stop(self):
         self.ThreadActive = False
         self.quit()
+
 
 
 class Ui_MainWindow:
@@ -270,11 +273,18 @@ class Ui_MainWindow:
         self.step3_model_name = QtWidgets.QLabel(self.steps_3)
         self.step3_model_name.setGeometry(QtCore.QRect(33, 41, 200, 31))
         self.step3_model_name.setObjectName("step3_model_name")
-        self.step3_code_editor = QtWidgets.QTextEdit(self.steps_3)
+        # self.step3_code_editor = QtWidgets.QTextEdit(self.steps_3)
+        self.step3_code_editor = pyqtCodeEdit(self.steps_3)
+        self.highlighter = pyqtHighlighter(self.step3_code_editor.document())
         self.step3_code_editor.setGeometry(QtCore.QRect(30, 84, 791, 441))
         self.step3_code_editor.setStyleSheet("border: 1px solid grey;\n"
                                              "border-radius: 10px;\n"
-                                             "background: white;")
+                                             "background: #282c34\n;"
+                                             "padding: 20px;\n"
+                                             "color: white;")
+        font = QtGui.QFont("monospace")
+        font.setPointSize(10)
+        self.step3_code_editor.setFont(font)
         self.step3_code_editor.setObjectName("step3_code_editor")
         self.step_3_training = QtWidgets.QPushButton(self.steps_3)
         self.step_3_training.setGeometry(QtCore.QRect(682, 550, 141, 31))
@@ -346,8 +356,6 @@ class Ui_MainWindow:
 
     def handle_step3(self):
         self.steps_3.raise_()
-        sc = QsciScintilla()
-        sc.show()
 
     def handle_training_button(self):
         self.model_training_window.raise_()
