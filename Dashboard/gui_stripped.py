@@ -35,31 +35,31 @@ class WorkerTraining(QThread):
             pygame.display.iconify()
 
             # write reward func
-            def reward_func(props):
-                reward = 0
-                if props["isAlive"]:
-                    reward = 1
-                obs = props["obs"]
-                if obs[0] < obs[-1] and props["dir"] == -1:
-                    reward += 1
-                    if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-                        reward += 1
-                elif obs[0] > obs[-1] and props["dir"] == 1:
-                    reward += 1
-                    if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-                        reward += 1
-                else:
-                    reward += 0
-                    if props["rotationVel"] == 15:
-                        reward += 1
-                return reward
+            # def reward_func(props):
+            #     reward = 0
+            #     if props["isAlive"]:
+            #         reward = 1
+            #     obs = props["obs"]
+            #     if obs[0] < obs[-1] and props["dir"] == -1:
+            #         reward += 1
+            #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+            #             reward += 1
+            #     elif obs[0] > obs[-1] and props["dir"] == 1:
+            #         reward += 1
+            #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+            #             reward += 1
+            #     else:
+            #         reward += 0
+            #         if props["rotationVel"] == 15:
+            #             reward += 1
+            #     return reward
 
             # create model arch
             linear_net = Linear_QNet([5, 128, 3])
 
             # initialize game and agent
             agent = Agent.Agent(linear_net, load_last_checkpoint)
-            game = Game.CarEnv(reward_func, screen)
+            game = Game.CarEnv(self.args["reward_function"], screen)
 
             # training loop
             plot_scores = []
@@ -68,6 +68,7 @@ class WorkerTraining(QThread):
 
             record = 0
             while True:
+                time.sleep(0.01)
                 pygame.display.update()
                 # pixmap_pygame, pixmap_matplotlib = QtGui.QPixmap("./map.jpg"), QtGui.QPixmap("./map.jpg")
                 pixmap_pygame = None
@@ -113,6 +114,7 @@ class WorkerTraining(QThread):
                         total_score += score
                         mean_score = total_score / agent.n_games
                         plot_mean_scores.append(mean_score)
+                        QThread.msleep(1)
                 self.ImageUpdate.emit(pixmap_pygame, [plot_scores, plot_mean_scores])
 
     def stop(self):
@@ -120,11 +122,19 @@ class WorkerTraining(QThread):
         self.quit()
 
 
-
 class Ui_MainWindow:
 
     def __init__(self):
-        self.args = {}
+        self.args = {
+            "reward_function_initial":
+                '''def reward_function(params):\n\tif not params["isAlive"]:\n\t\treturn 1\n\telse:\n\t\treturn 0'''
+        }
+
+        # to be returned from environment
+        self.test_params = {
+            "isAlive": True,
+            "list": []
+        }
 
     def PixMapUpdate(self, pixmap_pygame, pixmap_matplotlib):
         self.pygame_win.setScaledContents(True)
@@ -339,14 +349,43 @@ class Ui_MainWindow:
         self.content_window.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
+        self.initial_updates()
         self.retranslateUi(MainWindow)
+        self.control_buttons()
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def initial_updates(self):
+        # text_option = QtGui.QTextOption()
+        # text_option.setFlags(QtGui.QTextOption.)
+        # self.step3_code_editor.document().setDefaultTextOption(text_option)
+        self.step3_code_editor.setPlainText(self.args["reward_function_initial"])
+
+    def control_buttons(self):
         self.step1_button.clicked.connect(self.handle_step1)
         self.step2_button.clicked.connect(self.handle_step2)
         self.step3_button.clicked.connect(self.handle_step3)
         self.step_3_training.clicked.connect(self.handle_training_button)
+        self.step_3_validate.clicked.connect(self.handle_code_validation)
         self.stop_training_button.clicked.connect(self.handle_stop_training_button)
 
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    def validate_code(self, func_string, *args, **kwargs):
+        global_vars = {}
+        try:
+            compiled_func = compile(func_string, "<string>", "exec")
+            exec(compiled_func, global_vars)
+            func = global_vars["reward_function"]
+            # func(*args, **kwargs)
+            self.args["reward_function"] = func
+        except Exception as e:
+            import traceback
+            error_lines = traceback.format_exc().strip().split('\n')
+            print('\n'.join(error_lines[3:]))
+
+    def handle_code_validation(self):
+        code = self.step3_code_editor.toPlainText()
+        params = Game.get_test_params()
+        print(params)
+        self.validate_code(code, params)
 
     def handle_step1(self):
         self.steps_1.raise_()
@@ -386,134 +425,135 @@ class Ui_MainWindow:
         self.step_3_validate.setText(_translate("MainWindow", "Validate"))
         self.stop_training_button.setText(_translate("MainWindow", "STOP TRAINING"))
 
-    def train(self):
-        self.args = {}
-        MODE = "training"
-        load_last_checkpoint = False
-        CONTROL_SPEED = 0.05
-        TRAIN_SPEED = 100
-        screen = pygame.display.set_mode((800, 700), pygame.HIDDEN)
-        pygame.display.iconify()
+    # def train(self):
+    #     self.args = {}
+    #     MODE = "training"
+    #     load_last_checkpoint = False
+    #     CONTROL_SPEED = 0.05
+    #     TRAIN_SPEED = 100
+    #     screen = pygame.display.set_mode((800, 700), pygame.HIDDEN)
+    #     pygame.display.iconify()
 
         # write reward func
-        def reward_func(props):
-            reward = 0
-            if props["isAlive"]:
-                reward = 1
-            obs = props["obs"]
-            if obs[0] < obs[-1] and props["dir"] == -1:
-                reward += 1
-                if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-                    reward += 1
-            elif obs[0] > obs[-1] and props["dir"] == 1:
-                reward += 1
-                if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-                    reward += 1
-            else:
-                reward += 0
-                if props["rotationVel"] == 15:
-                    reward += 1
-            return reward
+        # def reward_func(props):
+        #     reward = 0
+        #     if props["isAlive"]:
+        #         reward = 1
+        #     obs = props["obs"]
+        #     if obs[0] < obs[-1] and props["dir"] == -1:
+        #         reward += 1
+        #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+        #             reward += 1
+        #     elif obs[0] > obs[-1] and props["dir"] == 1:
+        #         reward += 1
+        #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+        #             reward += 1
+        #     else:
+        #         reward += 0
+        #         if props["rotationVel"] == 15:
+        #             reward += 1
+        #     return reward
 
         # create model arch
-        linear_net = Linear_QNet([5, 128, 3])
+        # linear_net = Linear_QNet([5, 128, 3])
 
         # initialize game and agent
-        agent = Agent.Agent(linear_net, load_last_checkpoint)
-        game = Game.CarEnv(reward_func, screen)
-
-        # training loop
-        plot_scores = []
-        plot_mean_scores = []
-        total_score = 0
-
-        record = 0
-        while True:
-            pygame.display.update()
-            try:
-                x = pygame.surfarray.array3d(screen)
-                x = np.transpose(x, (1, 0, 2))
-                h, w, _ = x.shape
-                bgra = np.empty((h, w, 4), np.uint8, 'C')
-                bgra[..., 0] = x[..., 2]
-                bgra[..., 1] = x[..., 1]
-                bgra[..., 2] = x[..., 0]
-                if x.shape[2] == 3:
-                    bgra[..., 3].fill(255)
-                    fmt = QtGui.QImage.Format_RGB32
-                else:
-                    bgra[..., 3] = x[..., 3]
-                    fmt = QtGui.QImage.Format_ARGB32
-
-                qimage = QtGui.QImage(bgra.data, w, h, fmt)
-                qimage.ndarray = bgra
-                pixmap = QtGui.QPixmap.fromImage(qimage)
-
-                self.pygame_win.setScaledContents(True)
-                self.pygame_win.setPixmap(
-                    pixmap.scaled(self.pygame_win.width(), self.pygame_win.height(), QtCore.Qt.KeepAspectRatio))
-                self.pygame_win.setPixmap(pixmap.scaled(self.pygame_win.width(), self.pygame_win.height()))
-                self.pygame_win.adjustSize()
-
-            except Exception as e:
-                print(e)
-            if MODE == "human":
-                time.sleep(CONTROL_SPEED)
-                game.play_human()
-            else:
-                game.FPS = TRAIN_SPEED
-                reward, done, score = agent.train_step(game)
-                game.timeTicking()
-
-                if done:
-                    game.initialize()
-                    agent.n_games += 1
-                    agent.train_long_memory()
-                    if score > record:
-                        record = score
-                        agent.model.save()
-                    print('Game', agent.n_games, 'Score', score, 'Record:', record)
-                    # plot(score, plot_scores, total_score, plot_mean_scores, agent)
-                    plot_scores.append(score)
-                    total_score += score
-                    mean_score = total_score / agent.n_games
-                    plot_mean_scores.append(mean_score)
-                    try:
-                        fig = Figure()
-                        canvas = FigureCanvas(fig)
-                        ax = fig.add_subplot(111)
-                        # ax.set_title('Training...')
-                        ax.set_xlabel('Number of Games')
-                        ax.set_ylabel('Score')
-
-                        ax.plot(plot_scores)
-                        ax.plot(plot_mean_scores)
-                        # ax.ylim(ymin=0)
-                        canvas.draw()
-
-                        x = canvas.buffer_rgba()
-                        x = np.transpose(x, (1, 0, 2))
-                        x = np.transpose(x, (1, 0, 2))
-                        h, w, _ = x.shape
-                        bgra = np.empty((h, w, 4), np.uint8, 'C')
-                        bgra[..., 0] = x[..., 2]
-                        bgra[..., 1] = x[..., 1]
-                        bgra[..., 2] = x[..., 0]
-                        if x.shape[2] == 3:
-                            bgra[..., 3].fill(255)
-                            fmt = QtGui.QImage.Format_RGB32
-                        else:
-                            bgra[..., 3] = x[..., 3]
-                            fmt = QtGui.QImage.Format_ARGB32
-
-                        qimage = QtGui.QImage(bgra.data, w, h, fmt)
-                        qimage.ndarray = bgra
-                        pixmap = QtGui.QPixmap.fromImage(qimage)
-                        self.matplotlib_win.setScaledContents(True)
-                        self.matplotlib_win.setPixmap(pixmap)
-                        plt.pause(.1)
-                    except Exception as e:
-                        print(e)
+        # agent = Agent.Agent(linear_net, load_last_checkpoint)
+        # print(self.reward_function)
+        # game = Game.CarEnv(self.reward_function, screen)
+        #
+        # # training loop
+        # plot_scores = []
+        # plot_mean_scores = []
+        # total_score = 0
+        #
+        # record = 0
+        # while True:
+        #     pygame.display.update()
+        #     try:
+        #         x = pygame.surfarray.array3d(screen)
+        #         x = np.transpose(x, (1, 0, 2))
+        #         h, w, _ = x.shape
+        #         bgra = np.empty((h, w, 4), np.uint8, 'C')
+        #         bgra[..., 0] = x[..., 2]
+        #         bgra[..., 1] = x[..., 1]
+        #         bgra[..., 2] = x[..., 0]
+        #         if x.shape[2] == 3:
+        #             bgra[..., 3].fill(255)
+        #             fmt = QtGui.QImage.Format_RGB32
+        #         else:
+        #             bgra[..., 3] = x[..., 3]
+        #             fmt = QtGui.QImage.Format_ARGB32
+        #
+        #         qimage = QtGui.QImage(bgra.data, w, h, fmt)
+        #         qimage.ndarray = bgra
+        #         pixmap = QtGui.QPixmap.fromImage(qimage)
+        #
+        #         self.pygame_win.setScaledContents(True)
+        #         self.pygame_win.setPixmap(
+        #             pixmap.scaled(self.pygame_win.width(), self.pygame_win.height(), QtCore.Qt.KeepAspectRatio))
+        #         self.pygame_win.setPixmap(pixmap.scaled(self.pygame_win.width(), self.pygame_win.height()))
+        #         self.pygame_win.adjustSize()
+        #
+        #     except Exception as e:
+        #         print(e)
+        #     if MODE == "human":
+        #         time.sleep(CONTROL_SPEED)
+        #         game.play_human()
+        #     else:
+        #         game.FPS = TRAIN_SPEED
+        #         reward, done, score = agent.train_step(game)
+        #         game.timeTicking()
+        #
+        #         if done:
+        #             game.initialize()
+        #             agent.n_games += 1
+        #             agent.train_long_memory()
+        #             if score > record:
+        #                 record = score
+        #                 agent.model.save()
+        #             print('Game', agent.n_games, 'Score', score, 'Record:', record)
+        #             # plot(score, plot_scores, total_score, plot_mean_scores, agent)
+        #             plot_scores.append(score)
+        #             total_score += score
+        #             mean_score = total_score / agent.n_games
+        #             plot_mean_scores.append(mean_score)
+        #             try:
+        #                 fig = Figure()
+        #                 canvas = FigureCanvas(fig)
+        #                 ax = fig.add_subplot(111)
+        #                 # ax.set_title('Training...')
+        #                 ax.set_xlabel('Number of Games')
+        #                 ax.set_ylabel('Score')
+        #
+        #                 ax.plot(plot_scores)
+        #                 ax.plot(plot_mean_scores)
+        #                 # ax.ylim(ymin=0)
+        #                 canvas.draw()
+        #
+        #                 x = canvas.buffer_rgba()
+        #                 x = np.transpose(x, (1, 0, 2))
+        #                 x = np.transpose(x, (1, 0, 2))
+        #                 h, w, _ = x.shape
+        #                 bgra = np.empty((h, w, 4), np.uint8, 'C')
+        #                 bgra[..., 0] = x[..., 2]
+        #                 bgra[..., 1] = x[..., 1]
+        #                 bgra[..., 2] = x[..., 0]
+        #                 if x.shape[2] == 3:
+        #                     bgra[..., 3].fill(255)
+        #                     fmt = QtGui.QImage.Format_RGB32
+        #                 else:
+        #                     bgra[..., 3] = x[..., 3]
+        #                     fmt = QtGui.QImage.Format_ARGB32
+        #
+        #                 qimage = QtGui.QImage(bgra.data, w, h, fmt)
+        #                 qimage.ndarray = bgra
+        #                 pixmap = QtGui.QPixmap.fromImage(qimage)
+        #                 self.matplotlib_win.setScaledContents(True)
+        #                 self.matplotlib_win.setPixmap(pixmap)
+        #                 plt.pause(.1)
+        #             except Exception as e:
+        #                 print(e)
 
 
 if __name__ == "__main__":
