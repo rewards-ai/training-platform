@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QThread, pyqtSignal, Qt, QRegExp
 from PyQt5.QtGui import QTextCharFormat, QFont, QColor, QTextCursor, QSyntaxHighlighter
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QMessageBox
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
@@ -368,18 +368,29 @@ class Ui_MainWindow:
         self.step_3_validate.clicked.connect(self.handle_code_validation)
         self.stop_training_button.clicked.connect(self.handle_stop_training_button)
 
-    def validate_code(self, func_string, *args, **kwargs):
+    def validate_code(self, func_string, params):
         global_vars = {}
+        message_box = QMessageBox()
+        message_box.setMaximumWidth(600)
+        message_box.setWindowTitle("Code Validation Check")
         try:
             compiled_func = compile(func_string, "<string>", "exec")
             exec(compiled_func, global_vars)
             func = global_vars["reward_function"]
-            # func(*args, **kwargs)
+            func(params)
             self.args["reward_function"] = func
+
+            message_box.setIcon(QMessageBox.Information)
+            message_box.setText("Correct! Continue Training...")
+            message_box.exec_()
+
         except Exception as e:
             import traceback
             error_lines = traceback.format_exc().strip().split('\n')
-            print('\n'.join(error_lines[3:]))
+            message_box.setIcon(QMessageBox.Critical)
+            message_box.setText("Error!")
+            message_box.setInformativeText('\n'.join(error_lines[3:]))
+            message_box.exec_()
 
     def handle_code_validation(self):
         code = self.step3_code_editor.toPlainText()
