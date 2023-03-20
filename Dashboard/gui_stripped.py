@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QThread, pyqtSignal, Qt, QRegExp
-from PyQt5.QtGui import QTextCharFormat, QFont, QColor, QTextCursor, QSyntaxHighlighter
+from PyQt5.QtGui import QTextCharFormat, QFont, QColor, QTextCursor, QSyntaxHighlighter, QIntValidator
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QMessageBox
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -58,7 +58,11 @@ class WorkerTraining(QThread):
             linear_net = Linear_QNet([5, 128, 3])
 
             # initialize game and agent
-            agent = Agent.Agent(linear_net, load_last_checkpoint)
+            agent = Agent.Agent(model=linear_net,
+                                load_last_checkpoint=self.args["load_last_checkpoint"],
+                                lr=self.args["lr"],
+                                epsilon=self.args["epsilon"],
+                                gamma=self.args["gamma"])
             game = Game.CarEnv(self.args["reward_function"], screen)
 
             # training loop
@@ -271,11 +275,87 @@ class Ui_MainWindow:
         self.step2_head = QtWidgets.QLabel(self.steps_2)
         self.step2_head.setGeometry(QtCore.QRect(33, 41, 200, 31))
         self.step2_head.setObjectName("step2_head")
-        self.step2_desc = QtWidgets.QLineEdit(self.steps_2)
-        self.step2_desc.setGeometry(QtCore.QRect(31, 81, 551, 31))
-        self.step2_desc.setStyleSheet("border: 1px grey solid;\n"
-                                      "background: white;")
-        self.step2_desc.setObjectName("step2_desc")
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.steps_2)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(60, 90, 451, 551))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.hyperparams_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.hyperparams_layout.setContentsMargins(0, 0, 0, 0)
+        self.hyperparams_layout.setObjectName("hyperparams_layout")
+        self.hyperparam_1 = QtWidgets.QWidget(self.verticalLayoutWidget)
+        self.hyperparam_1.setObjectName("hyperparam_1")
+        self.hyperparam_label_1 = QtWidgets.QLabel(self.hyperparam_1)
+        self.hyperparam_label_1.setGeometry(QtCore.QRect(10, 10, 161, 31))
+        self.hyperparam_label_1.setObjectName("hyperparam_label_1")
+        self.hyperparam_value_1 = QtWidgets.QLineEdit(self.hyperparam_1)
+        self.hyperparam_value_1.setGeometry(QtCore.QRect(10, 40, 241, 31))
+        self.hyperparam_value_1.setObjectName("hyperparam_value_1")
+        self.hyperparam_value_1_valid = QIntValidator().setRange(0, 5)
+        self.hyperparam_value_1.setValidator(QIntValidator())
+        self.hyperparam_value_1.setMaxLength(2)
+        # self.hyperparam_value_1.setIn
+        self.hyperparam_info_1 = QtWidgets.QPushButton(self.hyperparam_1)
+        self.hyperparam_info_1.setGeometry(QtCore.QRect(410, 10, 31, 28))
+        self.hyperparam_info_1.setObjectName("hyperparam_info_1")
+        self.hyperparams_layout.addWidget(self.hyperparam_1)
+        self.hyperparam_value_1.setStyleSheet("background: white;")
+        self.hyperparam_info_1.setStyleSheet("border: 1px solid black; border-radius: 7px;")
+        self.hyperparam_2 = QtWidgets.QWidget(self.verticalLayoutWidget)
+        self.hyperparam_2.setObjectName("hyperparam_2")
+        self.hyperparam_label_2 = QtWidgets.QLabel(self.hyperparam_2)
+        self.hyperparam_label_2.setGeometry(QtCore.QRect(10, 10, 161, 31))
+        self.hyperparam_label_2.setObjectName("hyperparam_label_2")
+        self.hyperparam_value_2 = QtWidgets.QLineEdit(self.hyperparam_2)
+        self.hyperparam_value_2.setGeometry(QtCore.QRect(10, 40, 241, 31))
+        self.hyperparam_value_2.setObjectName("hyperparam_value_2")
+        self.hyperparam_value_2_valid = QIntValidator().setRange(0, 5)
+        self.hyperparam_value_2.setValidator(QIntValidator())
+        self.hyperparam_value_2.setMaxLength(2)
+        # self.hyperparam_value_2.setIn
+        self.hyperparam_info_2 = QtWidgets.QPushButton(self.hyperparam_2)
+        self.hyperparam_info_2.setGeometry(QtCore.QRect(410, 10, 31, 28))
+        self.hyperparam_info_2.setObjectName("hyperparam_info_2")
+        self.hyperparams_layout.addWidget(self.hyperparam_2)
+        self.hyperparam_value_2.setStyleSheet("background: white;")
+        self.hyperparam_info_2.setStyleSheet("border: 1px solid black; border-radius: 7px;")
+        self.hyperparam_3 = QtWidgets.QWidget(self.verticalLayoutWidget)
+        self.hyperparam_3.setObjectName("hyperparam_3")
+        self.hyperparam_label_3 = QtWidgets.QLabel(self.hyperparam_3)
+        self.hyperparam_label_3.setGeometry(QtCore.QRect(10, 10, 161, 31))
+        self.hyperparam_label_3.setObjectName("hyperparam_label_3")
+        self.hyperparam_value_3 = QtWidgets.QLineEdit(self.hyperparam_3)
+        self.hyperparam_value_3.setGeometry(QtCore.QRect(10, 40, 241, 31))
+        self.hyperparam_value_3.setObjectName("hyperparam_value_3")
+        self.hyperparam_value_3_valid = QIntValidator().setRange(0, 5)
+        self.hyperparam_value_3.setValidator(QIntValidator())
+        self.hyperparam_value_3.setMaxLength(2)
+        # self.hyperparam_value_3.setIn
+        self.hyperparam_info_3 = QtWidgets.QPushButton(self.hyperparam_3)
+        self.hyperparam_info_3.setGeometry(QtCore.QRect(410, 10, 31, 28))
+        self.hyperparam_info_3.setObjectName("hyperparam_info_3")
+        self.hyperparams_layout.addWidget(self.hyperparam_3)
+        self.hyperparam_value_3.setStyleSheet("background: white;")
+        self.hyperparam_info_3.setStyleSheet("border: 1px solid black; border-radius: 7px;")
+        self.hyperparam_4 = QtWidgets.QWidget(self.verticalLayoutWidget)
+        self.hyperparam_4.setObjectName("hyperparam_4")
+        self.hyperparam_label_4 = QtWidgets.QLabel(self.hyperparam_4)
+        self.hyperparam_label_4.setGeometry(QtCore.QRect(10, 10, 161, 31))
+        self.hyperparam_label_4.setObjectName("hyperparam_label_4")
+        self.hyperparam_value_4 = QtWidgets.QLineEdit(self.hyperparam_4)
+        self.hyperparam_value_4.setGeometry(QtCore.QRect(10, 40, 241, 31))
+        self.hyperparam_value_4.setObjectName("hyperparam_value_4")
+        self.hyperparam_value_4_valid = QIntValidator().setRange(0, 5)
+        self.hyperparam_value_4.setValidator(QIntValidator())
+        self.hyperparam_value_4.setMaxLength(2)
+        # self.hyperparam_value_4.setIn
+        self.hyperparam_info_4 = QtWidgets.QPushButton(self.hyperparam_4)
+        self.hyperparam_info_4.setGeometry(QtCore.QRect(410, 10, 31, 28))
+        self.hyperparam_info_4.setObjectName("hyperparam_info_4")
+        self.hyperparams_layout.addWidget(self.hyperparam_4)
+        self.hyperparam_value_4.setStyleSheet("background: white;")
+        self.hyperparam_info_4.setStyleSheet("border: 1px solid black; border-radius: 7px;")
+        self.step2_head = QtWidgets.QLabel(self.steps_2)
+        self.step2_head.setGeometry(QtCore.QRect(33, 41, 200, 31))
+        self.step2_head.setObjectName("step2_head")
         self.steps_3 = QtWidgets.QWidget(self.steps_desc_window)
         self.steps_3.setGeometry(QtCore.QRect(19, 19, 901, 681))
         self.steps_3.setStyleSheet("border: none;")
@@ -409,6 +489,11 @@ class Ui_MainWindow:
 
     def handle_training_button(self):
         self.model_training_window.raise_()
+
+        self.args["lr"] = 0.001
+        self.args["epsilon"] = int(self.hyperparam_value_3.text())/100
+        self.args["gamma"] = int(self.hyperparam_value_4.text())/100
+
         self.worker_trainer = WorkerTraining(self.args)
         self.worker_trainer.start()
         self.worker_trainer.ImageUpdate.connect(self.PixMapUpdate)
@@ -430,7 +515,15 @@ class Ui_MainWindow:
         self.step1_model_name.setText(_translate("MainWindow", "Enter Model Name"))
         self.step1_model_desc.setText(_translate("MainWindow", "Enter Model Description"))
         self.step1_env_choose.setText(_translate("MainWindow", "Select a track"))
-        self.step2_head.setText(_translate("MainWindow", "HyperParameter 1"))
+        self.step2_head.setText(_translate("MainWindow", "Hyperparameters"))
+        self.hyperparam_label_1.setText(_translate("MainWindow", "Learning rate (LR)"))
+        self.hyperparam_info_1.setText(_translate("MainWindow", "i"))
+        self.hyperparam_label_2.setText(_translate("MainWindow", "Hidden Layer Size"))
+        self.hyperparam_info_2.setText(_translate("MainWindow", "i"))
+        self.hyperparam_label_3.setText(_translate("MainWindow", "epsilon"))
+        self.hyperparam_info_3.setText(_translate("MainWindow", "i"))
+        self.hyperparam_label_4.setText(_translate("MainWindow", "gamma"))
+        self.hyperparam_info_4.setText(_translate("MainWindow", "i"))
         self.step3_model_name.setText(_translate("MainWindow", "Customize Reward Function"))
         self.step_3_training.setText(_translate("MainWindow", "Begin Training"))
         self.step_3_validate.setText(_translate("MainWindow", "Validate"))
@@ -445,126 +538,126 @@ class Ui_MainWindow:
     #     screen = pygame.display.set_mode((800, 700), pygame.HIDDEN)
     #     pygame.display.iconify()
 
-        # write reward func
-        # def reward_func(props):
-        #     reward = 0
-        #     if props["isAlive"]:
-        #         reward = 1
-        #     obs = props["obs"]
-        #     if obs[0] < obs[-1] and props["dir"] == -1:
-        #         reward += 1
-        #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-        #             reward += 1
-        #     elif obs[0] > obs[-1] and props["dir"] == 1:
-        #         reward += 1
-        #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-        #             reward += 1
-        #     else:
-        #         reward += 0
-        #         if props["rotationVel"] == 15:
-        #             reward += 1
-        #     return reward
+    # write reward func
+    # def reward_func(props):
+    #     reward = 0
+    #     if props["isAlive"]:
+    #         reward = 1
+    #     obs = props["obs"]
+    #     if obs[0] < obs[-1] and props["dir"] == -1:
+    #         reward += 1
+    #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+    #             reward += 1
+    #     elif obs[0] > obs[-1] and props["dir"] == 1:
+    #         reward += 1
+    #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+    #             reward += 1
+    #     else:
+    #         reward += 0
+    #         if props["rotationVel"] == 15:
+    #             reward += 1
+    #     return reward
 
-        # create model arch
-        # linear_net = Linear_QNet([5, 128, 3])
+    # create model arch
+    # linear_net = Linear_QNet([5, 128, 3])
 
-        # initialize game and agent
-        # agent = Agent.Agent(linear_net, load_last_checkpoint)
-        # print(self.reward_function)
-        # game = Game.CarEnv(self.reward_function, screen)
-        #
-        # # training loop
-        # plot_scores = []
-        # plot_mean_scores = []
-        # total_score = 0
-        #
-        # record = 0
-        # while True:
-        #     pygame.display.update()
-        #     try:
-        #         x = pygame.surfarray.array3d(screen)
-        #         x = np.transpose(x, (1, 0, 2))
-        #         h, w, _ = x.shape
-        #         bgra = np.empty((h, w, 4), np.uint8, 'C')
-        #         bgra[..., 0] = x[..., 2]
-        #         bgra[..., 1] = x[..., 1]
-        #         bgra[..., 2] = x[..., 0]
-        #         if x.shape[2] == 3:
-        #             bgra[..., 3].fill(255)
-        #             fmt = QtGui.QImage.Format_RGB32
-        #         else:
-        #             bgra[..., 3] = x[..., 3]
-        #             fmt = QtGui.QImage.Format_ARGB32
-        #
-        #         qimage = QtGui.QImage(bgra.data, w, h, fmt)
-        #         qimage.ndarray = bgra
-        #         pixmap = QtGui.QPixmap.fromImage(qimage)
-        #
-        #         self.pygame_win.setScaledContents(True)
-        #         self.pygame_win.setPixmap(
-        #             pixmap.scaled(self.pygame_win.width(), self.pygame_win.height(), QtCore.Qt.KeepAspectRatio))
-        #         self.pygame_win.setPixmap(pixmap.scaled(self.pygame_win.width(), self.pygame_win.height()))
-        #         self.pygame_win.adjustSize()
-        #
-        #     except Exception as e:
-        #         print(e)
-        #     if MODE == "human":
-        #         time.sleep(CONTROL_SPEED)
-        #         game.play_human()
-        #     else:
-        #         game.FPS = TRAIN_SPEED
-        #         reward, done, score = agent.train_step(game)
-        #         game.timeTicking()
-        #
-        #         if done:
-        #             game.initialize()
-        #             agent.n_games += 1
-        #             agent.train_long_memory()
-        #             if score > record:
-        #                 record = score
-        #                 agent.model.save()
-        #             print('Game', agent.n_games, 'Score', score, 'Record:', record)
-        #             # plot(score, plot_scores, total_score, plot_mean_scores, agent)
-        #             plot_scores.append(score)
-        #             total_score += score
-        #             mean_score = total_score / agent.n_games
-        #             plot_mean_scores.append(mean_score)
-        #             try:
-        #                 fig = Figure()
-        #                 canvas = FigureCanvas(fig)
-        #                 ax = fig.add_subplot(111)
-        #                 # ax.set_title('Training...')
-        #                 ax.set_xlabel('Number of Games')
-        #                 ax.set_ylabel('Score')
-        #
-        #                 ax.plot(plot_scores)
-        #                 ax.plot(plot_mean_scores)
-        #                 # ax.ylim(ymin=0)
-        #                 canvas.draw()
-        #
-        #                 x = canvas.buffer_rgba()
-        #                 x = np.transpose(x, (1, 0, 2))
-        #                 x = np.transpose(x, (1, 0, 2))
-        #                 h, w, _ = x.shape
-        #                 bgra = np.empty((h, w, 4), np.uint8, 'C')
-        #                 bgra[..., 0] = x[..., 2]
-        #                 bgra[..., 1] = x[..., 1]
-        #                 bgra[..., 2] = x[..., 0]
-        #                 if x.shape[2] == 3:
-        #                     bgra[..., 3].fill(255)
-        #                     fmt = QtGui.QImage.Format_RGB32
-        #                 else:
-        #                     bgra[..., 3] = x[..., 3]
-        #                     fmt = QtGui.QImage.Format_ARGB32
-        #
-        #                 qimage = QtGui.QImage(bgra.data, w, h, fmt)
-        #                 qimage.ndarray = bgra
-        #                 pixmap = QtGui.QPixmap.fromImage(qimage)
-        #                 self.matplotlib_win.setScaledContents(True)
-        #                 self.matplotlib_win.setPixmap(pixmap)
-        #                 plt.pause(.1)
-        #             except Exception as e:
-        #                 print(e)
+    # initialize game and agent
+    # agent = Agent.Agent(linear_net, load_last_checkpoint)
+    # print(self.reward_function)
+    # game = Game.CarEnv(self.reward_function, screen)
+    #
+    # # training loop
+    # plot_scores = []
+    # plot_mean_scores = []
+    # total_score = 0
+    #
+    # record = 0
+    # while True:
+    #     pygame.display.update()
+    #     try:
+    #         x = pygame.surfarray.array3d(screen)
+    #         x = np.transpose(x, (1, 0, 2))
+    #         h, w, _ = x.shape
+    #         bgra = np.empty((h, w, 4), np.uint8, 'C')
+    #         bgra[..., 0] = x[..., 2]
+    #         bgra[..., 1] = x[..., 1]
+    #         bgra[..., 2] = x[..., 0]
+    #         if x.shape[2] == 3:
+    #             bgra[..., 3].fill(255)
+    #             fmt = QtGui.QImage.Format_RGB32
+    #         else:
+    #             bgra[..., 3] = x[..., 3]
+    #             fmt = QtGui.QImage.Format_ARGB32
+    #
+    #         qimage = QtGui.QImage(bgra.data, w, h, fmt)
+    #         qimage.ndarray = bgra
+    #         pixmap = QtGui.QPixmap.fromImage(qimage)
+    #
+    #         self.pygame_win.setScaledContents(True)
+    #         self.pygame_win.setPixmap(
+    #             pixmap.scaled(self.pygame_win.width(), self.pygame_win.height(), QtCore.Qt.KeepAspectRatio))
+    #         self.pygame_win.setPixmap(pixmap.scaled(self.pygame_win.width(), self.pygame_win.height()))
+    #         self.pygame_win.adjustSize()
+    #
+    #     except Exception as e:
+    #         print(e)
+    #     if MODE == "human":
+    #         time.sleep(CONTROL_SPEED)
+    #         game.play_human()
+    #     else:
+    #         game.FPS = TRAIN_SPEED
+    #         reward, done, score = agent.train_step(game)
+    #         game.timeTicking()
+    #
+    #         if done:
+    #             game.initialize()
+    #             agent.n_games += 1
+    #             agent.train_long_memory()
+    #             if score > record:
+    #                 record = score
+    #                 agent.model.save()
+    #             print('Game', agent.n_games, 'Score', score, 'Record:', record)
+    #             # plot(score, plot_scores, total_score, plot_mean_scores, agent)
+    #             plot_scores.append(score)
+    #             total_score += score
+    #             mean_score = total_score / agent.n_games
+    #             plot_mean_scores.append(mean_score)
+    #             try:
+    #                 fig = Figure()
+    #                 canvas = FigureCanvas(fig)
+    #                 ax = fig.add_subplot(111)
+    #                 # ax.set_title('Training...')
+    #                 ax.set_xlabel('Number of Games')
+    #                 ax.set_ylabel('Score')
+    #
+    #                 ax.plot(plot_scores)
+    #                 ax.plot(plot_mean_scores)
+    #                 # ax.ylim(ymin=0)
+    #                 canvas.draw()
+    #
+    #                 x = canvas.buffer_rgba()
+    #                 x = np.transpose(x, (1, 0, 2))
+    #                 x = np.transpose(x, (1, 0, 2))
+    #                 h, w, _ = x.shape
+    #                 bgra = np.empty((h, w, 4), np.uint8, 'C')
+    #                 bgra[..., 0] = x[..., 2]
+    #                 bgra[..., 1] = x[..., 1]
+    #                 bgra[..., 2] = x[..., 0]
+    #                 if x.shape[2] == 3:
+    #                     bgra[..., 3].fill(255)
+    #                     fmt = QtGui.QImage.Format_RGB32
+    #                 else:
+    #                     bgra[..., 3] = x[..., 3]
+    #                     fmt = QtGui.QImage.Format_ARGB32
+    #
+    #                 qimage = QtGui.QImage(bgra.data, w, h, fmt)
+    #                 qimage.ndarray = bgra
+    #                 pixmap = QtGui.QPixmap.fromImage(qimage)
+    #                 self.matplotlib_win.setScaledContents(True)
+    #                 self.matplotlib_win.setPixmap(pixmap)
+    #                 plt.pause(.1)
+    #             except Exception as e:
+    #                 print(e)
 
 
 if __name__ == "__main__":

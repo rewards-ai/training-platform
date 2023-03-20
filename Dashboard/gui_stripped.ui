@@ -116,13 +116,6 @@ font-weight: bold; height: auto;</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_4">
-        <property name="text">
-         <string>PushButton</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </widget>
@@ -380,22 +373,180 @@ background: white;</string>
          </rect>
         </property>
         <property name="text">
-         <string>HyperParameter 1</string>
+         <string>Hyperparameters</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="step2_desc">
+       <widget class="QWidget" name="verticalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>31</x>
-          <y>81</y>
-          <width>551</width>
-          <height>31</height>
+          <x>60</x>
+          <y>90</y>
+          <width>451</width>
+          <height>551</height>
          </rect>
         </property>
-        <property name="styleSheet">
-         <string notr="true">border: 1px grey solid;
-background: white;</string>
-        </property>
+        <layout class="QVBoxLayout" name="hyperparams_layout">
+         <item>
+          <widget class="QWidget" name="hyperparam_1" native="true">
+           <widget class="QLabel" name="hyperparam_label_1">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>161</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Learning rate (LR)</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="hyperparam_value_1">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>40</y>
+              <width>241</width>
+              <height>31</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="hyperparam_info_1">
+            <property name="geometry">
+             <rect>
+              <x>410</x>
+              <y>10</y>
+              <width>31</width>
+              <height>28</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>i</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="hyperparam_2" native="true">
+           <widget class="QLabel" name="hyperparam_label_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>161</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Hidden Layer Size</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="hyperparam_value_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>40</y>
+              <width>241</width>
+              <height>31</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="hyperparam_info_2">
+            <property name="geometry">
+             <rect>
+              <x>410</x>
+              <y>10</y>
+              <width>31</width>
+              <height>28</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>i</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="hyperparam_3" native="true">
+           <widget class="QLabel" name="hyperparam_label_3">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>161</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>epsilon</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="hyperparam_value_3">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>40</y>
+              <width>241</width>
+              <height>31</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="hyperparam_info_3">
+            <property name="geometry">
+             <rect>
+              <x>410</x>
+              <y>10</y>
+              <width>31</width>
+              <height>28</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>i</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="hyperparam_4" native="true">
+           <widget class="QLabel" name="hyperparam_label_4">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>161</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>gamma</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="hyperparam_value_4">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>40</y>
+              <width>241</width>
+              <height>31</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="hyperparam_info_4">
+            <property name="geometry">
+             <rect>
+              <x>410</x>
+              <y>10</y>
+              <width>31</width>
+              <height>28</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>i</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="steps_3" native="true">
@@ -471,9 +622,9 @@ background: white;</string>
         </property>
        </widget>
       </widget>
-      <zorder>steps_2</zorder>
-      <zorder>steps_1</zorder>
       <zorder>steps_3</zorder>
+      <zorder>steps_1</zorder>
+      <zorder>steps_2</zorder>
      </widget>
      <zorder>steps_desc_window</zorder>
      <zorder>steps_window</zorder>
@@ -549,9 +700,9 @@ background: white;</string>
       </widget>
      </widget>
     </widget>
-    <zorder>model_creation_window</zorder>
-    <zorder>content_background</zorder>
     <zorder>model_training_window</zorder>
+    <zorder>content_background</zorder>
+    <zorder>model_creation_window</zorder>
    </widget>
    <zorder>loading</zorder>
    <zorder>navbar</zorder>
