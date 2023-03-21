@@ -25,6 +25,10 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+rewards-sdk/
+rewards_ai
+auth/
+.idea/
 MANIFEST
 
 # PyInstaller
@@ -127,3 +131,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
