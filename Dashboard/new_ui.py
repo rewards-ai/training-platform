@@ -137,7 +137,7 @@ class Ui_MainWindow(object):
         self.step2_head.setGeometry(QtCore.QRect(33, 41, 200, 31))
         self.step2_head.setObjectName("step2_head")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.steps_2)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(60, 90, 451, 551))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(60, 90, 451, 391))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.hyperparams_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.hyperparams_layout.setContentsMargins(0, 0, 0, 0)
@@ -149,9 +149,11 @@ class Ui_MainWindow(object):
         self.hyperparam_label_1.setObjectName("hyperparam_label_1")
         self.hyperparam_value_1 = QtWidgets.QLineEdit(self.hyperparam_1)
         self.hyperparam_value_1.setGeometry(QtCore.QRect(10, 40, 241, 31))
+        self.hyperparam_value_1.setStyleSheet("background: white;")
         self.hyperparam_value_1.setObjectName("hyperparam_value_1")
         self.hyperparam_info_1 = QtWidgets.QPushButton(self.hyperparam_1)
         self.hyperparam_info_1.setGeometry(QtCore.QRect(410, 10, 31, 28))
+        self.hyperparam_info_1.setStyleSheet("border: 1px solid black; border-radius: 7px;")
         self.hyperparam_info_1.setObjectName("hyperparam_info_1")
         self.hyperparams_layout.addWidget(self.hyperparam_1)
         self.hyperparam_2 = QtWidgets.QWidget(self.verticalLayoutWidget)
@@ -190,6 +192,14 @@ class Ui_MainWindow(object):
         self.hyperparam_info_4.setGeometry(QtCore.QRect(410, 10, 31, 28))
         self.hyperparam_info_4.setObjectName("hyperparam_info_4")
         self.hyperparams_layout.addWidget(self.hyperparam_4)
+        self.hyperparams_save_bt = QtWidgets.QPushButton(self.steps_2)
+        self.hyperparams_save_bt.setGeometry(QtCore.QRect(362, 510, 151, 41))
+        self.hyperparams_save_bt.setStyleSheet("border: 1px solid grey;\n"
+"border-radius: 10px;;\n"
+"text-align: center;\n"
+"height: 30px;\n"
+"width: 100px;")
+        self.hyperparams_save_bt.setObjectName("hyperparams_save_bt")
         self.steps_3 = QtWidgets.QWidget(self.steps_desc_window)
         self.steps_3.setGeometry(QtCore.QRect(19, 19, 901, 681))
         self.steps_3.setStyleSheet("border: none;")
@@ -272,6 +282,7 @@ class Ui_MainWindow(object):
         self.hyperparam_info_3.setText(_translate("MainWindow", "i"))
         self.hyperparam_label_4.setText(_translate("MainWindow", "gamma"))
         self.hyperparam_info_4.setText(_translate("MainWindow", "i"))
+        self.hyperparams_save_bt.setText(_translate("MainWindow", "Save"))
         self.step3_model_name.setText(_translate("MainWindow", "Customize Reward Function"))
         self.step_3_training.setText(_translate("MainWindow", "Begin Training"))
         self.step_3_validate.setText(_translate("MainWindow", "Validate"))
