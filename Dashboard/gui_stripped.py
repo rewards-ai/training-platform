@@ -78,7 +78,7 @@ class WorkerTraining(QThread):
 
             record = 0
             while True:
-                time.sleep(0.01)
+                time.sleep(0.1)
                 pygame.display.update()
                 # pixmap_pygame, pixmap_matplotlib = QtGui.QPixmap("./map.jpg"), QtGui.QPixmap("./map.jpg")
                 pixmap_pygame = None
@@ -137,7 +137,8 @@ class Ui_MainWindow:
     def __init__(self):
         self.args = {
             "reward_function_initial":
-                '''def reward_function(params):\n\tif not params["isAlive"]:\n\t\treturn 1\n\telse:\n\t\treturn 0'''
+                '''def reward_function(params):\n\tif not params["isAlive"]:\n\t\treturn 1\n\telse:\n\t\treturn 0''',
+            "load_last_checkpoint": False
         }
 
         # to be returned from environment
@@ -282,7 +283,7 @@ class Ui_MainWindow:
         self.step2_head.setGeometry(QtCore.QRect(33, 41, 200, 31))
         self.step2_head.setObjectName("step2_head")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.steps_2)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(60, 90, 451, 551))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(60, 90, 451, 391))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.hyperparams_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.hyperparams_layout.setContentsMargins(0, 0, 0, 0)
@@ -295,10 +296,6 @@ class Ui_MainWindow:
         self.hyperparam_value_1 = QtWidgets.QLineEdit(self.hyperparam_1)
         self.hyperparam_value_1.setGeometry(QtCore.QRect(10, 40, 241, 31))
         self.hyperparam_value_1.setObjectName("hyperparam_value_1")
-        self.hyperparam_value_1_valid = QIntValidator().setRange(0, 5)
-        self.hyperparam_value_1.setValidator(QIntValidator())
-        self.hyperparam_value_1.setMaxLength(2)
-        # self.hyperparam_value_1.setIn
         self.hyperparam_info_1 = QtWidgets.QPushButton(self.hyperparam_1)
         self.hyperparam_info_1.setGeometry(QtCore.QRect(410, 10, 31, 28))
         self.hyperparam_info_1.setObjectName("hyperparam_info_1")
@@ -359,6 +356,14 @@ class Ui_MainWindow:
         self.hyperparams_layout.addWidget(self.hyperparam_4)
         self.hyperparam_value_4.setStyleSheet("background: white;")
         self.hyperparam_info_4.setStyleSheet("border: 1px solid black; border-radius: 7px;")
+        self.hyperparams_save_bt = QtWidgets.QPushButton(self.steps_2)
+        self.hyperparams_save_bt.setGeometry(QtCore.QRect(362, 510, 151, 41))
+        self.hyperparams_save_bt.setStyleSheet("border: 1px solid grey;\n"
+                                               "border-radius: 10px;;\n"
+                                               "text-align: center;\n"
+                                               "height: 30px;\n"
+                                               "width: 100px;")
+        self.hyperparams_save_bt.setObjectName("hyperparams_save_bt")
         self.step2_head = QtWidgets.QLabel(self.steps_2)
         self.step2_head.setGeometry(QtCore.QRect(33, 41, 200, 31))
         self.step2_head.setObjectName("step2_head")
@@ -497,8 +502,8 @@ class Ui_MainWindow:
         self.model_training_window.raise_()
 
         self.args["lr"] = 0.001
-        self.args["epsilon"] = int(self.hyperparam_value_3.text())/100
-        self.args["gamma"] = int(self.hyperparam_value_4.text())/100
+        self.args["epsilon"] = int(self.hyperparam_value_3.text()) / 100
+        self.args["gamma"] = int(self.hyperparam_value_4.text()) / 100
 
         self.worker_trainer = WorkerTraining(self.args)
         self.worker_trainer.start()
@@ -534,6 +539,7 @@ class Ui_MainWindow:
         self.step_3_training.setText(_translate("MainWindow", "Begin Training"))
         self.step_3_validate.setText(_translate("MainWindow", "Validate"))
         self.stop_training_button.setText(_translate("MainWindow", "STOP TRAINING"))
+        self.hyperparams_save_bt.setText(_translate("MainWindow", "Save"))
 
     # def train(self):
     #     self.args = {}
