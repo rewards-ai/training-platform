@@ -9,13 +9,27 @@ import numpy as np
 import pyqtgraph as pg
 import pygame
 import sys
-from rewards_ai.Environments.CarRacer.CarTrainer import Game, Agent
-from rewards_ai.Model.DQN import Linear_QNet
+
+
 import time
 from pyqtCodeEditor import pyqtHighlighter, pyqtCodeEdit
 
+from rewards import CarAgent, CarGame
+from rewards import LinearQNet
+
+# from rewards_ai.Environments.CarRacer.CarTrainer import Game, Agent
+# from rewards_ai.Model.DQN import Linear_QNet
+
 plt.ion()
 
+
+def get_test_params():
+        return {
+            "isAlive": None,
+            "obs": [],
+            "dir": None,
+            "rotationVel": None
+        } 
 
 class WorkerTraining(QThread):
     ImageUpdate = pyqtSignal(QtGui.QPixmap, list)
@@ -35,36 +49,28 @@ class WorkerTraining(QThread):
             pygame.display.iconify()
 
             # write reward func
-            # def reward_func(props):
-            #     reward = 0
-            #     if props["isAlive"]:
-            #         reward = 1
-            #     obs = props["obs"]
-            #     if obs[0] < obs[-1] and props["dir"] == -1:
-            #         reward += 1
-            #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-            #             reward += 1
-            #     elif obs[0] > obs[-1] and props["dir"] == 1:
-            #         reward += 1
-            #         if props["rotationVel"] == 7 or props["rotationVel"] == 10:
-            #             reward += 1
-            #     else:
-            #         reward += 0
-            #         if props["rotationVel"] == 15:
-            #             reward += 1
-            #     return reward
+            # default reward function 
 
             # create model arch
-            linear_net = Linear_QNet([5, 128, 3])
-
+            linear_net = LinearQNet([[5, 128], [128, 3]])
+            print(self.args)
+            
             # initialize game and agent
-            agent = Agent.Agent(model=linear_net,
-                                load_last_checkpoint=self.args["load_last_checkpoint"],
+            
+            agent = CarAgent(model=linear_net,
+                                load_last_checkpoint=None,#self.args["load_last_checkpoint"],
                                 lr=self.args["lr"],
                                 epsilon=self.args["epsilon"],
                                 gamma=self.args["gamma"])
-            game = Game.CarEnv(self.args["reward_function"], screen)
-
+            game = CarGame(reward_func=None, frame=screen)
+            
+            # agent = Agent.Agent(model=linear_net,
+            #                     load_last_checkpoint=None,#self.args["load_last_checkpoint"],
+            #                     lr=self.args["lr"],
+            #                     epsilon=self.args["epsilon"],
+            #                     gamma=self.args["gamma"])
+            # game = Game.CarEnv(self.args["reward_function_initial"], screen) # self.args["reward_function"]
+            
             # training loop
             plot_scores = []
             plot_mean_scores = []
@@ -470,11 +476,11 @@ class Ui_MainWindow:
             message_box.setIcon(QMessageBox.Critical)
             message_box.setText("Error!")
             message_box.setInformativeText('\n'.join(error_lines[3:]))
-            message_box.exec_()
-
+            message_box.exec_()   
+    
     def handle_code_validation(self):
         code = self.step3_code_editor.toPlainText()
-        params = Game.get_test_params()
+        params = get_test_params()
         print(params)
         self.validate_code(code, params)
 
