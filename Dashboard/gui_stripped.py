@@ -72,7 +72,7 @@ class WorkerTraining(QThread):
 
             record = 0
             while True:
-                time.sleep(0.1)
+                time.sleep(0.01)
                 pygame.display.update()
                 # pixmap_pygame, pixmap_matplotlib = QtGui.QPixmap("./map.jpg"), QtGui.QPixmap("./map.jpg")
                 pixmap_pygame = None
@@ -130,7 +130,7 @@ class Ui_MainWindow:
 
     def __init__(self):
         self.args = {
-            "reward_function_initial":
+            "reward_function":
                 '''def reward_function(params):\n\tif not params["isAlive"]:\n\t\treturn 1\n\telse:\n\t\treturn 0''',
             "load_last_checkpoint": False
         }
@@ -443,7 +443,7 @@ class Ui_MainWindow:
         # text_option = QtGui.QTextOption()
         # text_option.setFlags(QtGui.QTextOption.)
         # self.step3_code_editor.document().setDefaultTextOption(text_option)
-        self.step3_code_editor.setPlainText(self.args["reward_function_initial"])
+        self.step3_code_editor.setPlainText(self.args["reward_function"])
 
     def control_buttons(self):
         self.step1_button.clicked.connect(self.handle_step1)
@@ -460,9 +460,10 @@ class Ui_MainWindow:
         message_box.setWindowTitle("Code Validation Check")
         try:
             compiled_func = compile(func_string, "<string>", "exec")
+            print(func_string)
             exec(compiled_func, global_vars)
             func = global_vars["reward_function"]
-            func(params)
+            # func(params)
             self.args["reward_function"] = func
 
             message_box.setIcon(QMessageBox.Information)
@@ -673,3 +674,23 @@ if __name__ == "__main__":
     ui.setupUi(w)
     w.show()
     sys.exit(app.exec_())
+
+
+ # def reward_func(props):
+ #    reward = 0
+ #    if props["isAlive"]:
+ #        reward = 1
+ #    obs = props["obs"]
+ #    if obs[0] < obs[-1] and props["dir"] == -1:
+ #        reward += 1
+ #        if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+ #            reward += 1
+ #    elif obs[0] > obs[-1] and props["dir"] == 1:
+ #        reward += 1
+ #        if props["rotationVel"] == 7 or props["rotationVel"] == 10:
+ #            reward += 1
+ #    else:
+ #        reward += 0
+ #        if props["rotationVel"] == 15:
+ #            reward += 1
+ #    return reward
