@@ -1,9 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Step1.css'
+import Track from './Track/Track'
 
 const Step1 = () => {
+  /*
+  TODO:
+    - get list of tracks from server
+  */
+  const tracks_list = ["asd", "rwe", "sad", "iupo", "qwe"]
+  const [curTrack, setCurTrack] = useState(0)
+
   return (
-    <div className='Step1-container'>
+    <div className='step1-container'>
       <div className='step1-model-details'>
         <div className='step1-model-name-cont'>
           <p>Model name</p>
@@ -17,10 +25,7 @@ const Step1 = () => {
       <div className='step1-track-details'>
         <p>Choose Track</p>
         <div className='tracks-list'>
-          <div className='mock-tracks'></div>
-          <div className='mock-tracks'></div>
-          <div className='mock-tracks'></div>
-          <div className='mock-tracks'></div>
+          {tracks_list.map((url, i) => (<Track key={i} i={i}  url={url} curTrack={curTrack} setCurTrack={setCurTrack} />))}
         </div>
       </div>
     </div>

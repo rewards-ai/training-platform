@@ -1,0 +1,20 @@
+.step2-algo-list, .step2-hyperparam-list-cont, .step2-parans-list-cont {
+    border: #40403b solid 2px;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    font-family: 'Montserrat';
+}
+
+.step2-hyperparam-list, .step2-params-list {
+    width: 80%;
+}
+
+.MuiList-root {
+    background-color: #212121;
+}
+
+.dropdown-comp {
+    margin-top: 20px;
+}

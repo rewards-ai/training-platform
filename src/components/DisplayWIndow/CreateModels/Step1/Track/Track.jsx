@@ -1,8 +1,17 @@
 import React from 'react'
+import './Track.css'
 
-const Track = () => {
+const Track = ({i, url, curTrack, setCurTrack}) => {
+
+  /*
+  TODO:
+    - use URL to load images inside these divs
+  */
+
   return (
-    <div>Track</div>
+    <div onClick={()=>{
+      setCurTrack(i)
+    }} className={`tracks-card ${i === curTrack ? 'outlined' : ''}`} ></div>
   )
 }
 

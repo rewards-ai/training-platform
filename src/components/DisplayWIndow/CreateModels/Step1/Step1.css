@@ -42,14 +42,5 @@
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
-}
-
-.mock-tracks {
-    background-color: rgb(123, 123, 123);
-    width: 300px;
-    height: 200px;
-    margin-right: 20px;
-    border-radius: 10px;
-    flex-shrink: 0;
-    margin-bottom: 10px;
+    padding-left: 10px;
 }
