@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    background-color: #0c0b10;
+}
+
+@font-face {
+    font-family: 'Pixels';
+    src: url('assets/fonts/Thirteen-Pixel-Fonts.ttf');
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    margin-right: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgb(75, 75, 67);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d7d755;
+    border-radius: 10px;
+}

@@ -1,0 +1,46 @@
+.create-model-window {
+    width: 100%;
+    height: 100%;
+}
+
+.create-model-head {
+    width: 100%;
+    height: 10%;
+}
+
+.create-model-head p {
+    font-size: calc(5px + 2vw);
+    font-family: 'Montserrat';
+    color: white;
+    margin-left: 3%;
+    font-weight: bold;
+}
+
+.create-model-body {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+}
+
+.create-model-steps {
+    height: 100%;
+    width: 20%;
+}
+
+.create-model-display {
+    height: 100%;
+    width: 80%;
+}
+
+.create-model-container {
+    height: 90%;
+    width: 100%;
+    overflow-y: scroll;
+    margin-right: 10px;
+}
+
+.create-model-controller {
+    height: 10%;
+    width: 100%;
+}

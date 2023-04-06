@@ -1,0 +1,55 @@
+.step1-model-details {
+    border: #40403b solid 2px;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    font-family: 'Montserrat';
+}
+
+.step1-track-details {
+    border: #40403b solid 2px;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    font-family: 'Montserrat';
+}
+
+.step1-model-name-cont input {
+    width: 90%;
+    height: 30px;
+    color: white;
+    background-color: #1d1d1d;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.step1-model-desc-cont textarea {
+    width: 90%;
+    height: 100px;
+    color: white;
+    background-color: #1d1d1d;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.tracks-list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.mock-tracks {
+    background-color: rgb(123, 123, 123);
+    width: 300px;
+    height: 200px;
+    margin-right: 20px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    margin-bottom: 10px;
+}

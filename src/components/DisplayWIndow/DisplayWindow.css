@@ -1,0 +1,14 @@
+.display-window-container {
+    width: 85vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-window {
+    background-color: rgb(42, 42, 42);
+    width: 95%;
+    height: 90%;
+    border-radius: 20px;
+}
