@@ -1,0 +1,29 @@
+.environment {
+    width: 80%;
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.env-image {
+    height: 200px;
+    width: 400px;
+    background-color: grey;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.env-description {
+    font-family: 'Montserrat';
+    color: white;
+    margin-left: 10px;
+}
+
+.env-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.env-description a {
+    color: white;
+}

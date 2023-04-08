@@ -22,7 +22,7 @@ const Step2 = () => {
   let slider_sx = {
     '.MuiSlider-track': {color: '#d7d755'},
     '.MuiSlider-thumb': {color: '#d7d755'},
-    '.MuiSlider-rail': {color: '#555547'},
+    '.MuiSlider-rail':  {color: '#555547'},
   }
 
   return (
