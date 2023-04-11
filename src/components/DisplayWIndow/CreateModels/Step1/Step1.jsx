@@ -23,7 +23,7 @@ const Step1 = ({sessionJson, setSessionJson}) => {
     });
   }, [])
 
-  const [curTrack, setCurTrack] = useState(0)
+  const [curTrack, setCurTrack] = useState(sessionJson["environment_world"])
 
   return (
     <div className='step1-container'>
@@ -32,12 +32,14 @@ const Step1 = ({sessionJson, setSessionJson}) => {
           <p>Model name</p>
           <input type='text' placeholder='new-model-keep-left-only' 
             onChange={(e) => {setSessionJson({...sessionJson, "model_id": e.target.value})}}
+            value={sessionJson["model_id"]}
           />
         </div>
         <div className='step1-model-desc-cont'>
           <p>Model Description</p>
           <textarea placeholder='This model is superior'
             onChange={(e) => {setSessionJson({...sessionJson, "model_description": e.target.value})}}
+            value={sessionJson["model_description"]}
           />
         </div>
       </div>
