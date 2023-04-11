@@ -1,0 +1,13 @@
+.table-row {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Montserrat';
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 5px 0px;
+}
+
+.row-details {
+    width: 100%;
+}

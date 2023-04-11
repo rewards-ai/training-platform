@@ -1,0 +1,71 @@
+.models-window-cont {
+    width: 100%;
+    height: 100%;
+}
+
+.models-window-head {
+    width: 100%;
+    height: 10%;
+}
+
+.models-window-head p {
+    font-size: calc(5px + 2vw);
+    font-family: 'Montserrat';
+    color: white;
+    margin-left: 3%;
+    font-weight: bold;
+}
+
+.models-window-body {
+    width: auto;
+    height: 80%;
+    margin: 20px;
+    /* border: #40403b solid 2px;
+    border-radius: 10px; */
+    margin-top: 0px;
+}
+
+.styled-button {
+    font-family: 'Montserrat';
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 30px;
+    background-color: rgb(34, 34, 34);
+    color: white;
+    cursor: pointer;
+    border: rgb(97, 97, 97) solid 1px;
+}
+
+.styled-button:hover {
+    border: #d7d755 solid 1px;
+}
+
+.models-window-list {
+    height: calc(100% - 10px);
+    width: 70%;
+    overflow-y: scroll;
+    border: #40403b solid 2px;
+    border-radius: 10px;
+    padding: 10px 10px 0px 10px;
+}
+
+.models-window-display {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+}
+
+.models-window-controller {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgb(42 42 42);
+}

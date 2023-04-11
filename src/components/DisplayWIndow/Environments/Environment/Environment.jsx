@@ -2,12 +2,18 @@ import { useState } from "react"
 import React from 'react'
 import "./Environment.css"
 
-const Environment = ({i, env, curEnv, setCurEnv}) => {
+const Environment = ({i, env, curEnv, setCurEnv, sessionJson, setSessionJson}) => {
+
+    function handleOnClick(e) {
+        env["isReleased"] ? setCurEnv(i) : {}
+        setSessionJson({...sessionJson, "environment_name": "car-race"})
+    }
+
     return (
         <div className='environment'>
             {/* <img className="env-image" src={env["thumbnail"]} /> */}
             <div className={`env-image ${i === curEnv ? 'outlined' : ''}`}
-                onClick={()=>{ env["isReleased"] ? setCurEnv(i) : {}}}
+                onClick={handleOnClick}
                 style={env["isReleased"] ? {} : {filter: 'brightness(0.5)'}}
                 />
             <div className="env-description">

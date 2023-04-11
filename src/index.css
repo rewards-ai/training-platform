@@ -23,3 +23,20 @@ body {
     background: #d7d755;
     border-radius: 10px;
 }
+
+.swal2-modal {
+    font-family: 'Montserrat';
+}
+
+.swal2-confirm {
+    background-color: rgb(53, 53, 46) !important;
+}
+
+.swal2-cancel {
+    background-color: rgb(53, 53, 46) !important;
+}
+
+.swal2-warning {
+    border-color: yellow !important;
+    color: yellow !important;
+}

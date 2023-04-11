@@ -2,7 +2,7 @@ import React from 'react'
 import { Slider, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material'
 import './Step2.css'
 
-const Step2 = () => {
+const Step2 = ({sessionJson, setSessionJson}) => {
   /*
   TODO:
     - get list of available models from backend
@@ -33,7 +33,9 @@ const Step2 = () => {
           return (
             <>
               <label>
-                <input type="radio" name="radio-buttons" id="" />
+                <input type="radio" name="radio-buttons" value="dqn"
+                  onChange={(e) => {setSessionJson({...sessionJson, "learning_algorithm": e.target.value})}}
+                />
                 {model['name']}
               </label>
             </>
@@ -45,7 +47,9 @@ const Step2 = () => {
           <Stack spacing={5}>
             <FormControl fullWidth sx={{}}>
               <InputLabel style={{color: 'white'}}>Choose Loss Function</InputLabel>
-              <Select label="Choose Loss Function" style={{color: 'white'}} sx={SX}>
+              <Select label="Choose Loss Function" style={{color: 'white'}} sx={SX}
+                onChange={(e) => {setSessionJson({...sessionJson, "loss_fn": e.target.value})}}
+              >
                 <MenuItem style={{color: 'white'}} value={'MSE'}>Mean Squared Error (MSE)</MenuItem>
                 <MenuItem style={{color: 'white'}} value={'RMSE'}>Root Mean Squared Error (RMSE)</MenuItem>
                 <MenuItem style={{color: 'white'}} value={'MAE'}>Mean Absolute Error (MAE)</MenuItem>
@@ -54,7 +58,9 @@ const Step2 = () => {
 
             <FormControl fullWidth>
               <InputLabel style={{color: 'white'}}>Choose Optimizer</InputLabel>
-              <Select label="Choose Optimizer" style={{color: 'white'}} sx={SX}>
+              <Select label="Choose Optimizer" style={{color: 'white'}} sx={SX}
+                onChange={(e) => {setSessionJson({...sessionJson, "optimizer": e.target.value})}}
+              >
                 <MenuItem style={{color: 'white'}} value={'adam'}>Adam</MenuItem>
                 <MenuItem style={{color: 'white'}} value={'rmsprop'}>RMSprop</MenuItem>
                 <MenuItem style={{color: 'white'}} value={'adagrad'}>Adaptive Gradient Algorithm (Adagrad)</MenuItem>
@@ -67,13 +73,24 @@ const Step2 = () => {
         <div className='step2-hyperparam-list'>
           <p>Learning Rate</p>
           <Slider valueLabelDisplay='auto' defaultValue={60} sx={slider_sx}
+            onChange={(e) => {setSessionJson({...sessionJson, "learning_rate": e.target.value / 10000})}}
             valueLabelFormat={(e)=>{return((e/10000))}} max={100} min={1} style={{marginBottom: '30px'}}/>
           <p>Hidden Layer Size</p>
-          <Slider valueLabelDisplay='auto' defaultValue={9} sx={slider_sx} max={81} min={3} style={{marginBottom: '30px'}}/>
+          <Slider valueLabelDisplay='auto' defaultValue={9} sx={slider_sx} max={81} min={3} style={{marginBottom: '30px'}}
+            onChange={(e) => {setSessionJson({...sessionJson, "model_configuration": [[5, e.target.value], [e.target.value, 3]]})}}
+          />
+          <p>Number of Episodes</p>
+          <Slider valueLabelDisplay='auto' defaultValue={700} sx={slider_sx} max={2000} min={100} style={{marginBottom: '30px'}}
+            onChange={(e) => {setSessionJson({...sessionJson, "num_episodes": e.target.value})}}
+          />
           <p>Gamma</p>
-          <Slider valueLabelDisplay='auto' defaultValue={90} sx={slider_sx} max={100} min={1} style={{marginBottom: '30px'}}/>
+          <Slider valueLabelDisplay='auto' defaultValue={90} sx={slider_sx} max={100} min={1} style={{marginBottom: '30px'}}
+            onChange={(e) => {setSessionJson({...sessionJson, "gamma": e.target.value})}}
+          />
           <p>Epsilon</p>
-          <Slider valueLabelDisplay='auto' defaultValue={20} sx={slider_sx} max={100} min={1} style={{marginBottom: '30px'}}/>
+          <Slider valueLabelDisplay='auto' defaultValue={20} sx={slider_sx} max={100} min={1} style={{marginBottom: '30px'}}
+            onChange={(e) => {setSessionJson({...sessionJson, "epsilon": e.target.value})}}
+          />
         </div>
       </div>
     </div>

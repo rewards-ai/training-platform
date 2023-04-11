@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './Environments.css'
 import Environment from './Environment/Environment'
 
-const Environments = () => {
+const Environments = ({sessionJson, setSessionJson}) => {
   const [curEnv, setCurEnv] = useState(0)
 
   /*
@@ -56,7 +56,11 @@ const Environments = () => {
       </div>
       <div className='envs-body'>
         <div className="env-container">
-          {envs.map((e, i) => (<Environment key={i} i={i} env={e} curEnv={curEnv} setCurEnv={setCurEnv}/>))}
+          {envs.map((e, i) => (<Environment key={i} i={i} 
+            env={e} curEnv={curEnv} 
+            setCurEnv={setCurEnv} 
+            sessionJson={sessionJson}
+            setSessionJson={setSessionJson}/>))}
         </div>
       </div>
     </div>

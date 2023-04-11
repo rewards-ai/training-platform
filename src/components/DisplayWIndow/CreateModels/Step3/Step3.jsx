@@ -2,10 +2,9 @@ import React, {useState} from 'react'
 import './Step3.css'
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
-const Step3 = () => {
+const Step3 = ({sessionJson, setSessionJson}) => {
   const [code, setCode] = React.useState(
-    `
-def reward_function(params):
+    `def reward_function(params):
     reward = 0
 
     return rewards
@@ -19,7 +18,10 @@ def reward_function(params):
           className='code-editor'
           value={code}
           language="py"
-          onChange={(evn) => setCode(evn.target.value)}
+          onChange={(e) => {
+            setCode(e.target.value)
+            setSessionJson({...sessionJson, "reward_function": e.target.value})
+          }}
           padding={20}
         />
       </div>

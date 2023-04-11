@@ -1,7 +1,7 @@
 import React from 'react'
 import './Track.css'
 
-const Track = ({i, url, curTrack, setCurTrack}) => {
+const Track = ({i, url, curTrack, setCurTrack, sessionJson, setSessionJson}) => {
 
   /*
   TODO:
@@ -11,6 +11,7 @@ const Track = ({i, url, curTrack, setCurTrack}) => {
   return (
     <div onClick={()=>{
       setCurTrack(i)
+      setSessionJson({...sessionJson, "environment_world": i})
     }} className={`tracks-card ${i === curTrack ? 'outlined' : ''}`} ></div>
   )
 }
