@@ -12,7 +12,9 @@ const Track = ({i, url, curTrack, setCurTrack, sessionJson, setSessionJson}) => 
     <div onClick={()=>{
       setCurTrack(i)
       setSessionJson({...sessionJson, "environment_world": i})
-    }} className={`tracks-card ${i === curTrack ? 'outlined' : ''}`} ></div>
+    }} className={`tracks-card ${i === curTrack ? 'outlined' : ''}`} 
+    style={{backgroundImage: `url('../../../src/assets/images/environments/car_racer/${url}')`}}
+    ></div>
   )
 }
 

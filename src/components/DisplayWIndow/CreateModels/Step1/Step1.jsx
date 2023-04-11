@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
+import { useEffect } from 'react'
 import './Step1.css'
+import axios from 'axios'
 import Track from './Track/Track'
 
 const Step1 = ({sessionJson, setSessionJson}) => {
@@ -7,7 +9,20 @@ const Step1 = ({sessionJson, setSessionJson}) => {
   TODO:
     - get list of tracks from server
   */
-  const tracks_list = ["asd", "rwe", "sad", "iupo", "qwe"]
+
+    const [tracks, setTracks] = useState([])
+
+  useEffect(() => {
+    axios.post(`http://127.0.0.1:8000/api/v1/get_all_tracks`, sessionJson["environment"])
+    .then((response) => {
+      console.log(response)
+      setTracks(response.data)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, [])
+
   const [curTrack, setCurTrack] = useState(0)
 
   return (
@@ -29,7 +44,7 @@ const Step1 = ({sessionJson, setSessionJson}) => {
       <div className='step1-track-details'>
         <p>Choose Track</p>
         <div className='tracks-list'>
-          {tracks_list.map((url, i) => (<Track key={i} i={i}  url={url} curTrack={curTrack} 
+          {tracks.map((url, i) => (<Track key={i} i={i}  url={url} curTrack={curTrack} 
             setCurTrack={setCurTrack} 
             sessionJson={sessionJson}
             setSessionJson={setSessionJson}/>))}

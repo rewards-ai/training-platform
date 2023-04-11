@@ -1,54 +1,23 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Environments.css'
 import Environment from './Environment/Environment'
+import axios from 'axios'
 
 const Environments = ({sessionJson, setSessionJson}) => {
   const [curEnv, setCurEnv] = useState(0)
+  const [envs, setEnvs] = useState([{}])
 
-  /*
-  TODO:
-    - get list of environments from backend
-  */
-
-  let envs = [
-    {
-      "name": "Car Racer",
-      "thumbnail": "",
-      "description": "This is place where a car travels through different tracks and tries to finish it at the best time possible. Let the racing begin!",
-      "link": "",
-      "isReleased": true
-    },
-    {
-      "name": "Car Racer",
-      "thumbnail": "",
-      "description": "This is place where a car travels through different tracks and tries to finish it at the best time possible. Let the racing begin!",
-      "link": "",
-      "isReleased": true
-    },
-    {
-      "name": "Car Racer",
-      "thumbnail": "",
-      "description": "This is place where a car travels through different tracks and tries to finish it at the best time possible. Let the racing begin!",
-      "link": "",
-      "isReleased": false
-    },
-    {
-      "name": "Car Racer",
-      "thumbnail": "",
-      "description": "This is place where a car travels through different tracks and tries to finish it at the best time possible. Let the racing begin!",
-      "link": "",
-      "isReleased": false
-    },
-    {
-      "name": "Car Racer",
-      "thumbnail": "",
-      "description": "This is place where a car travels through different tracks and tries to finish it at the best time possible. Let the racing begin!",
-      "link": "",
-      "isReleased": true
-    }
-  ]
-
-
+  useEffect(() => {
+    axios.post(`http://127.0.0.1:8000/api/v1/get_all_envs`)
+    .then((response) => {
+      console.log(response)
+      setEnvs(response.data)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, [])
+  
   return (
     <div className='envs-window'>
       <div className='envs-head'>

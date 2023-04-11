@@ -1,11 +1,14 @@
 .tracks-card {
-    background-color: rgb(123, 123, 123);
+    background-color: rgb(64 64 64);
     width: 300px;
     height: 200px;
     margin-right: 20px;
     border-radius: 10px;
     flex-shrink: 0;
     margin-bottom: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .outlined {
