@@ -47,23 +47,23 @@ const Step2 = ({sessionJson, setSessionJson}) => {
           <Stack spacing={5}>
             <FormControl fullWidth sx={{}}>
               <InputLabel style={{color: 'white'}}>Choose Loss Function</InputLabel>
-              <Select label="Choose Loss Function" style={{color: 'white'}} sx={SX} defaultValue='mse'
+              <Select label="Choose Loss Function" style={{color: 'white'}} sx={SX} defaultValue={sessionJson["loss_fn"]}
                 onChange={(e) => {setSessionJson({...sessionJson, "loss_fn": e.target.value})}}
               >
-                <MenuItem style={{color: 'white'}} value={'mse'}>Mean Squared Error (MSE)</MenuItem>
-                <MenuItem style={{color: 'white'}} value={'rmse'}>Root Mean Squared Error (RMSE)</MenuItem>
-                <MenuItem style={{color: 'white'}} value={'mae'}>Mean Absolute Error (MAE)</MenuItem>
+                <MenuItem key="loss_1" style={{color: 'white'}} value={'mse'}>Mean Squared Error (MSE)</MenuItem>
+                <MenuItem key="loss_2" style={{color: 'white'}} value={'rmse'}>Root Mean Squared Error (RMSE)</MenuItem>
+                <MenuItem key="loss_3" style={{color: 'white'}} value={'mae'}>Mean Absolute Error (MAE)</MenuItem>
               </Select>
             </FormControl>
 
             <FormControl fullWidth>
               <InputLabel style={{color: 'white'}}>Choose Optimizer</InputLabel>
-              <Select label="Choose Optimizer" style={{color: 'white'}} sx={SX} defaultValue='adam'
+              <Select label="Choose Optimizer" style={{color: 'white'}} sx={SX} defaultValue={sessionJson["optimizer"]}
                 onChange={(e) => {setSessionJson({...sessionJson, "optimizer": e.target.value})}}
               >
-                <MenuItem style={{color: 'white'}} value={'adam'}>Adam</MenuItem>
-                <MenuItem style={{color: 'white'}} value={'rmsprop'}>RMSprop</MenuItem>
-                <MenuItem style={{color: 'white'}} value={'adagrad'}>Adaptive Gradient Algorithm (Adagrad)</MenuItem>
+                <MenuItem key="optimizer_1" style={{color: 'white'}} value={'adam'}>Adam</MenuItem>
+                <MenuItem key="optimizer_2" style={{color: 'white'}} value={'rmsprop'}>RMSprop</MenuItem>
+                <MenuItem key="optimizer_3" style={{color: 'white'}} value={'adagrad'}>Adaptive Gradient Algorithm (Adagrad)</MenuItem>
               </Select>
             </FormControl>
           </Stack>

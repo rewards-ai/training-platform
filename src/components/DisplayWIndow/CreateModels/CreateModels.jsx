@@ -11,26 +11,42 @@ import axios from 'axios'
 const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
   const [curStep, setCurStep] = useState(1)
 
-  function createSession() {
-    axios.post(`http://127.0.0.1:8000/api/v1/create_session/session_id?=${sessionJson["model_id"]}`)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  async function createSession() {
+    let valid = await axios.get('http://127.0.0.1:8000/api/v1/get_all_sessions')
+    .then(async (response) => {
+      let sessions_list = Object.keys(response.data)
+      if (!sessions_list.includes(sessionJson["model_id"])) {      
+        await axios.post(`http://127.0.0.1:8000/api/v1/create_session/${sessionJson["model_id"]}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+        return true
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Model already exists',
+          text: 'Please choose a different name',
+          confirmButtonText: 'OK'
+        });
+        return false
+      }
+    }) 
+    return valid
   }
 
-  function writeEnvParams() {
-    axios.post(`http://127.0.0.1:8000/api/v1/write_env_params`,
-    {
+  async function writeEnvParams() {
+    let data = {
       "session_id": sessionJson["model_id"],
       "environment_name": "car-race",
-      "environment_world": sessionJson["environment_world"],
+      "environment_world": sessionJson["environment_world"] + 1,
       "mode": "training",
       "car_speed": 20
     }
-    )
+    console.log(data)
+    await axios.post(`http://127.0.0.1:8000/api/v1/write_env_params`, data)
     .then((response) => {
       console.log(response);
     })
@@ -40,17 +56,19 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
   }
 
 
-  function writeAgentParams() {
-    axios.post(`http://127.0.0.1:8000/api/v1/write_agent_params`,
-      {
-        "session_id": "string",
-        "model_configuration": String(sessionJson["model_configuration"]),
-        "learning_rate": sessionJson["learning_rate"],
-        "loss_fn": sessionJson["loss_fn"],
-        "optimizer": sessionJson["optimizer"],
-        "num_episodes": sessionJson["num_episodes"]
-      }
-    )
+  async function writeAgentParams() {
+    let data = {
+      "session_id": sessionJson["model_id"],
+      "model_configuration": JSON.stringify(sessionJson["model_configuration"]),
+      "learning_rate": sessionJson["learning_rate"],
+      "loss_fn": sessionJson["loss_fn"],
+      "optimizer": sessionJson["optimizer"],
+      "gamma": sessionJson["gamma"],
+      "epsilon": sessionJson["epsilon"],
+      "num_episodes": sessionJson["num_episodes"]
+    }
+    console.log(data)
+    await axios.post(`http://127.0.0.1:8000/api/v1/write_agent_params`, data)
     .then((response) => {
       console.log(response);
     })
@@ -59,15 +77,15 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
     });
   }
 
-  function writeTrainingParams() {
-    axios.post(`http://127.0.0.1:8000/api/v1/write_training_params`,
-      {
-        "session_id": sessionJson["model_id"],
-        "learning_algorithm": sessionJson["learning_algorithm"],
-        "enable_wandb": false,
-        "reward_function": sessionJson["reward_function"]
-      }
-    )
+  async function writeTrainingParams() {
+    let data = {
+      "session_id": sessionJson["model_id"],
+      "learning_algorithm": sessionJson["learning_algorithm"],
+      "enable_wandb": 0,
+      "reward_function": sessionJson["reward_function"]
+    }
+    console.log(data)
+    await axios.post(`http://127.0.0.1:8000/api/v1/write_training_params`, data)
     .then((response) => {
       console.log(response);
     })
@@ -93,15 +111,15 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
           'success'
         )
         console.log(sessionJson)
-        setIsWin(2)
-        /*
-        TODO:
-          - Add check if model name is unique
-        */
         createSession()
-        writeEnvParams()
-        writeAgentParams()
-        writeTrainingParams()
+        .then((e) => {
+          if (e) {
+            writeEnvParams()
+            .then(() => writeAgentParams())
+            .then(() => writeTrainingParams())
+            .then(() => setIsWin(2))
+          }
+        })
       } else {}
     })
   }

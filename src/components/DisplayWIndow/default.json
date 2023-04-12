@@ -1,0 +1,16 @@
+{
+    "environment_name": "car_racer",
+    "model_id": "",
+    "model_description": "",
+    "environment_world": 0,
+    "setSessionJson": "dqn",
+    "loss_fn": "mse",
+    "learning_rate": 60,
+    "model_configuration": "[[5, 9], [9, 3]]",
+    "optimizer": "adam",
+    "num_episodes": 700,
+    "gamma": 90,
+    "epsilon": 20,
+    "learning_algorithm": "dqn",
+    "reward_function": "def reward_function(params):\n  reward = 0\n  if params[\"isAlive\"]:\n    reward = 1\n  return rewards"
+}

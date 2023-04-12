@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import './Models.css'
 import Row from './Row/Row'
+import axios from 'axios'
 
 const Models = () => {
 
@@ -22,13 +23,13 @@ const Models = () => {
   ]
 
   function getList() {
-    /*
-    TODO: 
-      - Get list from server
-    */
-    return [
-      'ds', 'sad'
-    ]
+    axios.get(`http://127.0.0.1:8000/api/v1/get_all_sessions`)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }  
   
   return (
@@ -39,10 +40,11 @@ const Models = () => {
       <div className='models-window-body'>
         <div className='models-window-display'>
           <div className='models-window-list'>
+            {getList}
             <div>{list.map((ele, i) => (<Row key={i} i={i} data={ele} curExp={curExp} setCurExp={setCurExp}/>))}</div>
           </div>
           <div className='models-window-controller'>
-            <button className='styled-button'style={{margin: '0px', marginBottom: '10px', marginTop: '20px'}}>Delete</button>
+            <button className='styled-button' onClick={getList} style={{margin: '0px', marginBottom: '10px', marginTop: '20px'}}>Delete</button>
             <button className='styled-button'style={{margin: '0px', marginBottom: '10px'}}>Re-Train</button>
             <button className='styled-button'style={{margin: '0px', marginBottom: '10px'}}>Evaluate</button>
           </div>
