@@ -4,7 +4,7 @@ import Steps from './Steps/Steps'
 import Step1 from './Step1/Step1'
 import Step2 from './Step2/Step2'
 import Step3 from './Step3/Step3'
-import Swal from 'sweetalert2/dist/sweetalert2'
+import Swal from "sweetalert2/src/sweetalert2"
 import "@sweetalert2/theme-dark"
 import axios from 'axios'
 
@@ -15,6 +15,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
     let valid = await axios.get('http://127.0.0.1:8000/api/v1/get_all_sessions')
     .then(async (response) => {
       let sessions_list = Object.keys(response.data)
+      console.log(sessions_list)
       if (!sessions_list.includes(sessionJson["model_id"])) {      
         await axios.post(`http://127.0.0.1:8000/api/v1/create_session/${sessionJson["model_id"]}`)
         .then((response) => {
@@ -97,7 +98,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
   const handleClick = () => {
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "Changes except environment world will not be allowed",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
