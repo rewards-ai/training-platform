@@ -2,8 +2,10 @@ import Swal from "sweetalert2/src/sweetalert2"
 import axios from "axios";
 import "@sweetalert2/theme-dark"
 
+const rewards_api = axios.create({baseURL: import.meta.env.VITE_REWARDS_API})
+
 export const getList = async (setCurExp, setExpList) => {
-    await axios.get(`http://127.0.0.1:8000/api/v1/get_all_sessions`)
+    await rewards_api.get(`/get_all_sessions`)
     .then((response) => {
       console.log("at all sessions", response);
       let session_ids = Object.keys(response.data)
@@ -26,7 +28,7 @@ export const getList = async (setCurExp, setExpList) => {
 
 const handleDelete = async (setCurExp, setExpList, exp) => {
     try {
-        axios.post(`http://127.0.0.1:8000/api/v1/delete_session/${exp["session_id"]}`)
+        rewards_api.post(`/delete_session/${exp["session_id"]}`)
         .then(() => getList(setCurExp, setExpList))
         Swal.fire({
             icon: 'success',

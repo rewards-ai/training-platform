@@ -5,15 +5,12 @@ import axios from 'axios'
 import Track from './Track/Track'
 
 const Step1 = ({sessionJson, setSessionJson}) => {
-  /*
-  TODO:
-    - get list of tracks from server
-  */
-
-    const [tracks, setTracks] = useState([])
+  
+  const rewards_api = axios.create({baseURL: import.meta.env.VITE_REWARDS_API})
+  const [tracks, setTracks] = useState([])
 
   useEffect(() => {
-    axios.post(`http://127.0.0.1:8000/api/v1/get_all_tracks`, sessionJson["environment"])
+    rewards_api.post(`/get_all_tracks`, sessionJson["environment"])
     .then((response) => {
       console.log(response)
       setTracks(response.data)

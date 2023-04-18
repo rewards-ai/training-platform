@@ -10,14 +10,15 @@ import axios from 'axios'
 
 const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
   const [curStep, setCurStep] = useState(1)
+  const rewards_api = axios.create({baseURL: import.meta.env.VITE_REWARDS_API})
 
   async function createSession() {
-    let valid = await axios.get('http://127.0.0.1:8000/api/v1/get_all_sessions')
+    let valid = await rewards_api.get('/get_all_sessions')
     .then(async (response) => {
       let sessions_list = Object.keys(response.data)
       console.log(sessions_list)
       if (!sessions_list.includes(sessionJson["model_id"])) {      
-        await axios.post(`http://127.0.0.1:8000/api/v1/create_session/${sessionJson["model_id"]}`)
+        await rewards_api.post(`/create_session/${sessionJson["model_id"]}`)
         .then((response) => {
           console.log(response);
         })
@@ -47,7 +48,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
       "car_speed": 20
     }
     console.log(data)
-    await axios.post(`http://127.0.0.1:8000/api/v1/write_env_params`, data)
+    await rewards_api.post(`/write_env_params`, data)
     .then((response) => {
       console.log(response);
     })
@@ -69,7 +70,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
       "num_episodes": sessionJson["num_episodes"]
     }
     console.log(data)
-    await axios.post(`http://127.0.0.1:8000/api/v1/write_agent_params`, data)
+    await rewards_api.post(`/write_agent_params`, data)
     .then((response) => {
       console.log(response);
     })
@@ -86,7 +87,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
       "reward_function": sessionJson["reward_function"]
     }
     console.log(data)
-    await axios.post(`http://127.0.0.1:8000/api/v1/write_training_params`, data)
+    await rewards_api.post(`/write_training_params`, data)
     .then((response) => {
       console.log(response);
     })

@@ -2,6 +2,7 @@ import React from 'react'
 import "./Row.css"
 
 const Row = ({i, data, curExp, setCurExp}) => {
+  console.log("data", data)
   return (
     <div className={`table-row ${i === curExp ? 'outlined' : ''}`} onClick={(e) => {setCurExp(i)}}>
         <div title='Model name' className='row-name row-details'><p>{data["session_id"]}</p></div>

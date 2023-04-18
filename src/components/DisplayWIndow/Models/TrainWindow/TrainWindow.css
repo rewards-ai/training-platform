@@ -1,5 +1,5 @@
 .training-window {
-    background-color: white;
+    background-color: rgb(42 42 42);
     position: fixed;
     z-index: 10;
     top: 0;
@@ -9,7 +9,29 @@
 }
 
 .training-window-inner {
-    background-color: blue;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#image {
+    height: 90%;
     width: 50%;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.training-window-controller {
+    border: grey solid 2px;
+    border-radius: 10px;
+    height: 80%;
+    width: 50%;
+    margin-left: 20px;
+    padding: 20px
+}
+
+.training-window-map {
     height: 50%;
 }

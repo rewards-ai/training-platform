@@ -6,9 +6,10 @@ import axios from 'axios'
 const Environments = ({sessionJson, setSessionJson}) => {
   const [curEnv, setCurEnv] = useState(0)
   const [envs, setEnvs] = useState([{}])
+  const rewards_api = axios.create({baseURL: import.meta.env.VITE_REWARDS_API})
 
   useEffect(() => {
-    axios.post(`http://127.0.0.1:8000/api/v1/get_all_envs`)
+    rewards_api.post(`/get_all_envs`)
     .then((response) => {
       console.log(response)
       setEnvs(response.data)
