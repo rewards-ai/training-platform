@@ -18,7 +18,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
       let sessions_list = Object.keys(response.data)
       console.log(sessions_list)
       if (!sessions_list.includes(sessionJson["model_id"])) {      
-        await rewards_api.post(`/create_session/${sessionJson["model_id"]}`)
+        await rewards_api.post(`/create_session?session_id=${sessionJson["model_id"]}`)
         .then((response) => {
           console.log(response);
         })
@@ -115,6 +115,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
         console.log(sessionJson)
         createSession()
         .then((e) => {
+          console.log("create", e)
           if (e) {
             writeEnvParams()
             .then(() => writeAgentParams())
@@ -122,7 +123,10 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
             .then(() => setIsWin(2))
           }
         })
-      } else {}
+        .catch((e) => {
+          console.log("error", e)
+        })
+      }
     })
   }
   return (

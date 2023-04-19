@@ -28,7 +28,7 @@ export const getList = async (setCurExp, setExpList) => {
 
 const handleDelete = async (setCurExp, setExpList, exp) => {
     try {
-        rewards_api.post(`/delete_session/${exp["session_id"]}`)
+        rewards_api.post(`/delete_session?session_id=${exp["session_id"]}`)
         .then(() => getList(setCurExp, setExpList))
         Swal.fire({
             icon: 'success',

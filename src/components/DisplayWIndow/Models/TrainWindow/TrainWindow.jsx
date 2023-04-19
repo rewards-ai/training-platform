@@ -59,7 +59,7 @@ const TrainWindow = ({session_id, setIsTraining}) => {
   return (
     <div className='training-window'>
       <div className='training-window-inner'>
-        <img id="image" src={`${import.meta.env.VITE_STREAM_API}/stream?id=${session_id}`}/>
+        <img id="image" src={`${import.meta.env.VITE_STREAM_API}/stream?session_id=${session_id}`}/>
         <div className='training-window-controller'>
           <div className='training-window-map'>
             <Line options={chartOptions} data={{
