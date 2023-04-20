@@ -1,24 +1,61 @@
-import './App.css'
-import DisplayWindow from './components/DisplayWIndow/DisplayWindow'
-import Navbar from './components/Navbar/Navbar'
-import VideoStream from './components/VideoStream/VideoStream'
-import { useState } from 'react'
-import LandingPage from './LandingPage'
+import './App.css';
+import DisplayWindow from './components/DisplayWIndow/DisplayWindow';
+import Navbar from './components/Navbar/Navbar';
+import VideoStream from './components/VideoStream/VideoStream';
+import { useState, useEffect } from 'react';
+import LandingPage from './LandingPage';
+
+import { useNavigate } from 'react-router-dom';
+import { supabase } from './authClient/supabaseClient';
 
 function App() {
-  const [isWin, setIsWin] = useState(0)
+  const [isWin, setIsWin] = useState(0);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function getUserData() {
+      await supabase.auth.getUser().then((value) => {
+        if (value.data?.user) {
+          console.log(value.data.user);
+          setUser(value.data.user);
+        }
+      });
+    }
+    getUserData();
+  }, []);
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    navigate('/');
+  };
+
   return (
     <div className="App">
-      {/* <LandingPage /> */}
-      {/* <VideoStream /> */}
-      <Navbar isWin={isWin} setIsWin={setIsWin} />
-      <DisplayWindow isWin={isWin} setIsWin={setIsWin}/>
+      {Object.keys(user).length !== 0 ? (
+        <>
+          {/* <LandingPage /> */}
+          {/* <VideoStream /> */}
+          <Navbar isWin={isWin} setIsWin={setIsWin} />
+          <DisplayWindow isWin={isWin} setIsWin={setIsWin} />
+        </>
+      ) : (
+        <>
+          Please sign in
+          <button
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            Log In Page
+          </button>
+        </>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
-
+export default App;
 
 // import React, { useState } from 'react';
 // // import './styles.css';
@@ -149,6 +186,3 @@ export default App
 // };
 
 // export default App;
-
-
-
