@@ -73,8 +73,8 @@ const Step2 = ({sessionJson, setSessionJson}) => {
         <div className='step2-hyperparam-list'>
           <p>Learning Rate</p>
           <Slider valueLabelDisplay='auto' defaultValue={sessionJson["learning_rate"]} sx={slider_sx}
-            onChange={(e) => {setSessionJson({...sessionJson, "learning_rate": e.target.value / 10000})}}
-            valueLabelFormat={(e)=>{return((e/10000))}} max={100} min={1} style={{marginBottom: '30px'}}/>
+            onChange={(e) => {setSessionJson({...sessionJson, "learning_rate": e.target.value})}}
+            step={0.001} max={0.1} min={0.0001} style={{marginBottom: '30px'}}/>
           <p>Hidden Layer Size</p>
           <Slider valueLabelDisplay='auto' defaultValue={sessionJson["model_configuration"][0][1]} sx={slider_sx} max={81} min={3} style={{marginBottom: '30px'}}
             onChange={(e) => {setSessionJson({...sessionJson, "model_configuration": [[5, e.target.value], [e.target.value, 3]]})}}
@@ -84,9 +84,9 @@ const Step2 = ({sessionJson, setSessionJson}) => {
             onChange={(e) => {setSessionJson({...sessionJson, "num_episodes": e.target.value})}}
           />
           <p>Gamma</p>
-          <Slider valueLabelDisplay='auto' defaultValue={sessionJson["gamma"]} sx={slider_sx} max={100} min={1} style={{marginBottom: '30px'}}
-            onChange={(e) => {setSessionJson({...sessionJson, "gamma": e.target.value})}}
-          />
+          <Slider valueLabelDisplay='auto' defaultValue={sessionJson["gamma"]} sx={slider_sx} step={0.01} 
+            max={1} min={0} style={{marginBottom: '30px'}}
+            onChange={(e) => {setSessionJson({...sessionJson, "gamma": e.target.value})}}/>
           <p>Epsilon</p>
           <Slider valueLabelDisplay='auto' defaultValue={sessionJson["epsilon"]} sx={slider_sx} max={100} min={1} style={{marginBottom: '30px'}}
             onChange={(e) => {setSessionJson({...sessionJson, "epsilon": e.target.value})}}

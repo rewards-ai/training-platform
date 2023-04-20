@@ -9,8 +9,9 @@
     height: 200px;
     width: 400px;
     background-color: grey;
-    border-radius: 10px;
+    border-radius: 5px;
     flex-shrink: 0;
+    background-size: 100%;
 }
 
 .env-description {

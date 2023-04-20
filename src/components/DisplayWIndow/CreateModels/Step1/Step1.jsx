@@ -26,15 +26,15 @@ const Step1 = ({sessionJson, setSessionJson}) => {
     <div className='step1-container'>
       <div className='step1-model-details'>
         <div className='step1-model-name-cont'>
-          <p>Model name</p>
-          <input type='text' placeholder='new-model-keep-left-only' 
+          <p>Session name</p>
+          <input type='text' placeholder='session-name' 
             onChange={(e) => {setSessionJson({...sessionJson, "model_id": e.target.value})}}
             value={sessionJson["model_id"]}
           />
         </div>
         <div className='step1-model-desc-cont'>
-          <p>Model Description</p>
-          <textarea placeholder='This model is superior'
+          <p>Session Description</p>
+          <textarea placeholder='This session uses stay left technique'
             onChange={(e) => {setSessionJson({...sessionJson, "model_description": e.target.value})}}
             value={sessionJson["model_description"]}
           />
@@ -43,7 +43,7 @@ const Step1 = ({sessionJson, setSessionJson}) => {
       <div className='step1-track-details'>
         <p>Choose Track</p>
         <div className='tracks-list'>
-          {tracks.map((url, i) => (<Track key={i} i={i}  url={url} curTrack={curTrack} 
+          {tracks.map((url, i) => (<Track key={i} i={i} url={url} curTrack={curTrack} 
             setCurTrack={setCurTrack} 
             sessionJson={sessionJson}
             setSessionJson={setSessionJson}/>))}
