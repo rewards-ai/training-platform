@@ -14,9 +14,11 @@ const Environment = ({i, env, curEnv, setCurEnv, sessionJson, setSessionJson}) =
             {/* <img className="env-image" src={env["thumbnail"]} /> */}
             <div className={`env-image ${i === curEnv ? 'outlined' : ''}`}
                 onClick={handleOnClick}
-                style={env["isReleased"] ? {backgroundImage: 
-                    `url('../../../src/assets/images/environments/${env["id"]}.gif')`
-                } : {filter: 'brightness(0.5)'}}
+                style={env["isReleased"] ? {
+                    backgroundImage: `url('../../../src/assets/images/environments/${env["id"]}.gif')`
+                } : {filter: 'brightness(0.5)',
+                backgroundImage: `url('../../../src/assets/images/environments/${env["id"]}.gif')`}
+            }
             />
             <div className="env-description">
                 <p className='env-name'>{env["name"]} {env["isReleased"] ? "" : " (Coming Soon!)"}</p>

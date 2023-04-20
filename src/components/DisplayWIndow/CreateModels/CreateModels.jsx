@@ -17,7 +17,24 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
     .then(async (response) => {
       let sessions_list = Object.keys(response.data)
       console.log(sessions_list)
-      if (!sessions_list.includes(sessionJson["model_id"])) {      
+      if (sessionJson["model_id"].trim().length === 0) {
+        console.log("trim", sessionJson["model_id"].trim().length, sessionJson["model_id"])
+        Swal.fire({
+          icon: 'warning',
+          title: 'Model name is empty',
+          text: 'Please enter a name',
+          confirmButtonText: 'OK'
+        });
+        return false
+      } else if (!/^\w+$/.test(sessionJson["model_id"])) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Session name incorrect',
+          text: 'Names should only contain alphabets, numbers and underscores',
+          confirmButtonText: 'OK'
+        });
+        return false
+      } else if (!sessions_list.includes(sessionJson["model_id"])) {      
         await rewards_api.post(`/create_session?session_id=${sessionJson["model_id"]}`)
         .then((response) => {
           console.log(response);
@@ -29,7 +46,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
       } else {
         Swal.fire({
           icon: 'warning',
-          title: 'Model already exists',
+          title: 'Session already exists',
           text: 'Please choose a different name',
           confirmButtonText: 'OK'
         });
@@ -132,7 +149,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
   return (
     <div className='create-model-window'>
       <div className='create-model-head'>
-        <p>Create Model</p>
+        <p>Create Session</p>
       </div>
       <div className='create-model-body'>
         <div className='create-model-steps'>
