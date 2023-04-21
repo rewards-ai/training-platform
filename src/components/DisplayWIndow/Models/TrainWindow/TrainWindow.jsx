@@ -22,38 +22,35 @@ ChartJS.register(
   Legend
 )
 import { Line } from 'react-chartjs-2';
+import ReactJson from 'react-json-view';
 
 const TrainWindow = ({session_id, setIsTraining}) => {
-  const stream_api = axios.create({baseURL: import.meta.env.VITE_STREAM_API})
+  const rewards_api = axios.create({baseURL: import.meta.env.VITE_REWARDS_API})
   const [plotData, setData] = useState({"plot_scores": [], "plot_mean_scores": []});
+  const [jsonData, setJsonData] = useState()
+
+  useEffect(() => {
+    rewards_api.get(`/get_all_params?session_id=${session_id}`)
+    .then((response) => {
+      setJsonData(response.data)
+    })
+  })
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetch('src/assets/temp.json')
         .then(response => response.json())
         .then(json => {
-          console.log(json)
           setData(json);
         });
     }, 10);
     return () => clearInterval(intervalId);
   }, []);
+  
 
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [{
-        ticks: {
-          fontColor: '#fff'
-        },
-      }],
-      yAxes: [{
-        ticks: {
-          fontColor: '#fff'
-        },
-      }],
-    },
+    maintainAspectRatio: false
   };
 
   return (
@@ -76,12 +73,14 @@ const TrainWindow = ({session_id, setIsTraining}) => {
                 ]
             }} />
           </div>
-          <div className=''>    
-            <button onClick={() => {
-              stream_api.get("/stop")
-              setIsTraining(false)}
-            } >Exit</button>
+          <div style={{margin: "10px 0px", width: "100%", overflowY: "scroll", overflowX: "hidden", height: "calc(50% - 60px)"}}>
+            <ReactJson style={{width:"100%"}} src={jsonData} theme="chalk" iconStyle='circle' />
           </div>
+            <button style={{width: "100%"}} className='styled-button' onClick={() => {
+              setIsTraining(false)
+              window.location.reload()
+            }
+            } >Exit</button>
         </div>
       </div>
     </div>

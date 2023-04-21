@@ -29,7 +29,9 @@
     height: 80%;
     width: 50%;
     margin-left: 20px;
-    padding: 20px
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .training-window-map {

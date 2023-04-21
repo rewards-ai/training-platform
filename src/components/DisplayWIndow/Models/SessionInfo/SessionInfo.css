@@ -1,0 +1,48 @@
+.session-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.session-info-cont {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #0c0b10;
+    padding: 15px;
+}
+
+.session-info-cont-sec1 {
+    padding: 10px;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    display: flex;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.session-info-cont p {
+    color: white;
+    font-family: 'Montserrat';
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.react-json-view {
+    margin-right: 5px;
+    width: 50%;
+    border-radius: 10px;
+    height: fit-content;
+    padding: 20px;
+}
+
+#code-editor1 {
+    margin-left: 5px;
+}

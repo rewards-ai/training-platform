@@ -63,6 +63,10 @@ export const deleteSession = (setCurExp, setExpList, exp) => {
     });
 }
 
-// export const beginTraining = (session_id) => {
-//     axios.get(`http://127.0.0.1:8000/api/v1/delete_session/${exp["session_id"]}`)
-// }
+export const handlePush = async (session_id, user) => {
+  let data = {session_id, user}
+  await rewards_api.post("/push_model", data)
+  .then((response) => {
+    console.log(response)
+  })
+}

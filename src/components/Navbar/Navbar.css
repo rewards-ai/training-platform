@@ -9,6 +9,8 @@
 .navbar-logo {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .navbar-logo img {
@@ -17,8 +19,9 @@
 }
 
 .navbar-logo p {
-    font-family: 'Pixels';
+    font-family: 'Montserrat';
     color: white;
+    text-align: center;
 }
 
 .navbar-actions {
@@ -55,4 +58,8 @@
     border-radius: 0px 5px 5px 0px;
     transition: all;
     transition-duration: 1s;
+}
+
+.avatar {
+    border: white solid 1px;
 }

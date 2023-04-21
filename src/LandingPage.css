@@ -1,39 +1,65 @@
-/* .landing {
-    width: 100vw;
+#auth-sign-in {
+    display: none !important;
+}
+
+.supabase-auth-ui_ui-divider {
+    display: none !important;
+}
+
+.c-kbVGyA {
+    display: none !important;
+}
+
+.landing {
     height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url("./assets/images/Bg.jpg");
+    background-size: contain;
 }
 
-.App {
-    font-family: sans-serif;
-    text-align: center;
+.landing-navbar {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.top {
-animation: rotate 15s infinite linear;
+.landing-body {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }
 
-.middle {
-animation: rotate 18s infinite reverse linear;
+.landing-navbar p {
+    color: black;
+    font-weight: 700;
+    font-family: 'Montserrat';
+    margin-right: 50px;
 }
 
-.bottom {
-animation: rotate 20s infinite linear;
+.t-dOnDMp {
+    margin-right: 20px;
 }
 
-.blobs {
-transition: transform 5s;
+.rewards_landing_logo {
+    height: 80%;
 }
 
-.blobs:hover {
-transform: translate(100px, 100px) scale(0.0);
+.rewards_descp {
+    color: black;
+    font-family: 'Montserrat';
+    width: 40%;
 }
 
-@keyframes rotate {
-0% {
-    transform: translate(100px, 100px) rotate(0deg);
+.rewards_descp a {
+    text-decoration: none;
+    font-family: 'Montserrat';
+    font-weight: 700;
 }
-100% {
-    transform: translate(100px, 100px) rotate(359deg);
-}
-}
-   */

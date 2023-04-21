@@ -11,3 +11,11 @@
 .row-details {
     width: 100%;
 }
+
+.MuiInputBase-root {
+    color: white !important;
+}
+
+.MuiList-root {
+    color: white !important;
+}
