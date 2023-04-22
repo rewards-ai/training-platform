@@ -1,0 +1,13 @@
+.cell-cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    margin-left: 100px;
+}
+
+.cell-cont p {
+    color: white;
+    padding: 0px 10px;
+    font-family: 'Montserrat';
+}

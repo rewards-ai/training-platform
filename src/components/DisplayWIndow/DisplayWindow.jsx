@@ -5,7 +5,7 @@ import axios from 'axios'
 import Environments from './Environments/Environments'
 import CreateModels from './CreateModels/CreateModels'
 import Models from './Models/Models'
-import Documentation from './Documentation/Documentation'
+import Leaderboard from './Leaderboard/Leaderboard'
 
 const DisplayWindow = ({isWin, setIsWin}) => {
   const [sessionJson, setSessionJson] = useState(null)
@@ -22,7 +22,7 @@ const DisplayWindow = ({isWin, setIsWin}) => {
             {isWin == 0 && <Environments sessionJson={sessionJson} setSessionJson={setSessionJson} />}
             {isWin == 1 && <CreateModels sessionJson={sessionJson} setSessionJson={setSessionJson} setIsWin={setIsWin}/>}
             {isWin == 2 && <Models sessionJson={sessionJson} setSessionJson={setSessionJson} />}
-            {isWin == 3 && <Documentation sessionJson={sessionJson} setSessionJson={setSessionJson} />}
+            {isWin == 3 && <Leaderboard sessionJson={sessionJson} setSessionJson={setSessionJson} />}
         </div>
     </div>
   )

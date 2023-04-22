@@ -66,7 +66,7 @@ const Navbar = ({isWin, setIsWin}) => {
           > 
             {(isDocs || isWin == 3) && <div className='navbar-element-select'></div>}
             <ArticleOutlinedIcon className='icons'/> 
-            <p>Documentation</p>
+            <p>Leaderboard</p>
           </div>
         </div>
         <div style={{cursor: 'pointer'}} onClick={handleSignOut} className='navbar-exit navbar-action-elements'>

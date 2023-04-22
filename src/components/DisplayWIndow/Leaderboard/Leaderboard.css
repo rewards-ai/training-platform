@@ -1,0 +1,28 @@
+.leaderboard-cont {
+    width: 100%;
+    height: 100%;
+}
+
+.leaderboard-head {
+    width: 100%;
+    height: 10%;
+}
+
+.leaderboard-head p {
+    font-size: calc(5px + 2vw);
+    font-family: 'Montserrat';
+    color: white;
+    margin-left: 3%;
+    font-weight: bold;
+}
+
+.leaderboard-body {
+    width: 95%;
+    height: 80%;
+    overflow-y: scroll;
+}
+
+.leaderboard-list-cont {
+    display: flex;
+    flex-direction: column;
+}
