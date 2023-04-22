@@ -1,6 +1,5 @@
 import React from 'react'
 import "./Cell.css"
-import { borderRadius } from '@mui/system'
 
 const Cell = ({data}) => {
   return (

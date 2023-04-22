@@ -63,11 +63,13 @@ export const deleteSession = (setCurExp, setExpList, exp) => {
     });
 }
 
-export const handlePush = async (session_id, user_id, user) => {
+export const handlePush = async (session_id, user_id, user, setShowLoading) => {
+  setShowLoading(true)
   let data = {session_id, user_id, user}
   console.log("checking", data)
   await rewards_api.post("/push_model", data)
   .then((response) => {
     console.log(response)
   })
+  setShowLoading(false)
 }

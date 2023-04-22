@@ -10,6 +10,7 @@ import axios from 'axios'
 
 const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
   const [curStep, setCurStep] = useState(1)
+  const [showLoading, setShowLoading] = useState(false);
   const rewards_api = axios.create({baseURL: import.meta.env.VITE_REWARDS_API})
 
   async function createSession() {
@@ -146,6 +147,7 @@ const CreateModels = ({sessionJson, setSessionJson, setIsWin}) => {
       }
     })
   }
+
   return (
     <div className='create-model-window'>
       <div className='create-model-head'>

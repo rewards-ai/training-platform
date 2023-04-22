@@ -18,6 +18,7 @@ const Models = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [user, setUser] = useState();
+  const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     async function getUserData() {
@@ -39,6 +40,7 @@ const Models = () => {
     <div className='models-window-cont'>
       {console.log("list", expList)}
       {isTraining && <TrainWindow session_id={expList[curExp]["session_id"]} setIsTraining={setIsTraining}/>}
+      {showLoading && <div className="loadingSpinnerContainer"><div className="loadingSpinner"></div></div>}
       {isEval && <Evaluation session_id={expList[curExp]["session_id"]}/>}
       <div className='models-window-head'>
         <p>Experiments List</p>
@@ -53,7 +55,7 @@ const Models = () => {
             <button className='styled-button' onClick={() => setIsEval(true)} style={{margin: '0px', marginBottom: '10px'}}>Evaluate</button>
             <button className='styled-button' onClick={handleOpen} style={{margin: '0px', marginBottom: '10px'}}>More Info</button>
             <button className='styled-button' onClick={() => deleteSession(setCurExp, setExpList, expList[curExp])} style={{margin: '0px', marginBottom: '10px', marginTop: '20px'}}>Delete</button>
-            <button className='styled-button' onClick={() => handlePush(expList[curExp]["session_id"], user.id, user)} style={{margin: '0px', marginBottom: '10px'}}>Push Model</button>
+            <button className='styled-button' onClick={() => handlePush(expList[curExp]["session_id"], user.id, user, setShowLoading)} style={{margin: '0px', marginBottom: '10px'}}>Push Model</button>
             <Modal className='session-info' open={open} onClose={handleClose}><SessionInfo session_id={expList[curExp]} /></Modal>
           </div>
         </div>
