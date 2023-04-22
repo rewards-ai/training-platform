@@ -20,8 +20,8 @@ const LandingPage = () => {
   return (
     <div className="landing">
       <div className='landing-navbar'>
-        <p>GitHub</p>
-        <p>Docs</p>
+        <p><a style={{textDecoration: 'none', color: "black"}} href='https://github.com/rewards-ai'>GitHub</a></p>
+        <p><a style={{textDecoration: 'none', color: "black"}} href='https://github.com/rewards-ai'>Docs</a></p>
         <Auth supabaseClient={supabase} theme="dark" providers={['google']} appearance={{ theme: ThemeSupa }}/>
       </div>
       <div className='landing-body'>
@@ -29,8 +29,8 @@ const LandingPage = () => {
         <div className='rewards_descp'>
           <h1><strong>rewards.ai</strong></h1>
           <p>rewards.ai is an open-source low-code reinforcement learning training platform created by 
-             <a href='https://www.linkedin.com/in/pratyush-patnaik-1394a91b8/'> Pratyush Kumar Patnaik </a> and 
-             <a href='https://in.linkedin.com/in/anindyadeep-sannigrahi-38683b1b6'> Anindyadeep Sannigrahi </a>. 
+             <a href='https://github.com/Pratyush-exe'> Pratyush Kumar Patnaik </a> and 
+             <a href='https://github.com/Anindyadeep'> Anindyadeep Sannigrahi </a>. 
             The overall project comprises various components, such as rewards-sdk, rewards-api, and rewards-ui. 
             It is currently in <strong>beta</strong>. We are beginning GitHub contributions from <strong>June 23</strong>. Any form of contributions are welcome!</p>
         </div>

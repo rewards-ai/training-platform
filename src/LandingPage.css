@@ -58,6 +58,14 @@
     width: 40%;
 }
 
+.rewards_descp h1 {
+    font-size: xX-large;
+}
+
+.rewards_descp p {
+    font-size: large;
+}
+
 .rewards_descp a {
     text-decoration: none;
     font-family: 'Montserrat';
